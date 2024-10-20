@@ -363,12 +363,9 @@ function validarPasswordLogin() {
 // header transparente quando rola a pagina
 window.addEventListener('scroll', function() {
     var header = document.getElementById('header');
-    var logo = document.getElementById('logo');
     if (window.scrollY > 50) {
         header.style.backgroundColor = 'rgba(47, 58, 78, 0.8)';
-        logo.style.backgroundColor = 'rgba(47, 58, 78, 0.8)';
     } else {
         header.style.backgroundColor = 'rgba(47, 58, 78, 1)';
-        logo.style.backgroundColor = 'rgba(47, 58, 78, 1)';
     }
 });
