@@ -187,18 +187,24 @@
         // Exibe os resultados
         div_mensagem1.innerHTML = `Capacidade total: ${totalCapacidade} toneladas`
         div_mensagem2.innerHTML = `Preenchimento total: ${totalPreenchimento.toFixed(0)} toneladas`
-        div_mensagem3.innerHTML = `O preco total dos silos são de R$${totalPreco}<br>`
+        div_mensagem3.innerHTML = `O preço total dos silos são de R$${totalPreco}<br>`
 
         if (proximo == 'Sim') {
             div_mensagem3.innerHTML += `A perda dos silos seria de <b style="color:red"> R$${perdaSoja.toFixed(2)} </b> em saca de soja, mais <b style="color:red"> R$${totalPreco.toFixed(2)} </b> na perda dos silos, sendo um total de <b style="color:red"> R$${(perdaSoja + totalPreco).toFixed(2)} </b> de prejuizo 
-             <br> Total de explosões na última decada: <b style="color:red"> 81 </b>
+             <br> Total de explosões na última decada nos Estados Unidos: <b style="color:red"> 81 </b>
     <img src="informacao.png" style="width: 20px; cursor: pointer;" onclick="mostrarFonte()">`
-        } else
+            div_mensagem3.innerHTML += `<br>Com a nossa solução técnica, você terá mais<b style="color:green"> segurança </b> ao ter o controle da variação de gases inflamáveis dentro do seu silo!`
+
+        } else{
             div_mensagem3.innerHTML += `A média da perda de um silo seria de <b style="color:red"> R$${(perdaSoja / silo).toFixed(2)} </b> em saca de soja, mais <b style="color:red"> R$${(totalPreco / silo).toFixed(2)} </b> na perda dos silos, 
-            sendo um total de <b style="color:red"> R$${(perdaSoja / silo + totalPreco / silo).toFixed(2)} </b> de prejuizo
-            <b style="color:red"> 81 </b> 
-                <img src="informacao.png" style="width: 20px; cursor: pointer;" onclick="mostrarFonte()">`
-    }
+            sendo um total de <b style="color:red"> R$${(perdaSoja / silo + totalPreco / silo).toFixed(2)} </b> de prejuízo<br>
+            Total de explosões na última decada nos Estados Unidos:<b style="color:red"> 81 </b>
+                <img src="informacao.png" style="width: 20px; cursor: pointer;" onclick="mostrarFonte()"><br>
+                `              
+             div_mensagem3.innerHTML += `<br>Com a nossa solução técnica, você terá mais<b style="color:green"> segurança </b> ao ter o controle da variação de gases inflamáveis dentro do seu silo!`
+            }
+            }
+    
 
     function mostrarFonte() {
     alert("Fonte: https://www.purdue.edu/engineering/ABE/agconfinespaces/wp-content/uploads/2022/06/2021-Summary-of-US-Ag-Confined-Space-FINAL-4.19.22.pdf ");
