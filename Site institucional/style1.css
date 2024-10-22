@@ -116,6 +116,7 @@ button:hover {
     height: 80px;
     background-color: rgba(47, 58, 78, 1);
     transition: background-color 1.0s ease;
+    object-fit: cover;
 }
 
 .titulo {
