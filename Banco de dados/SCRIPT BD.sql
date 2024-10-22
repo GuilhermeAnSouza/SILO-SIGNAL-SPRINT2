@@ -36,13 +36,13 @@ CREATE TABLE usuario (
 );
 
 INSERT INTO usuario VALUES
-(DEFAULT, 1, 1, 'Claudio Frizzarini', 'Gerente de Silo', '11973458648', '11365478236', 'claudio.frizzarini@sptech.school' , md5('Frizza2024@')),
-(DEFAULT, 1, 1, 'Lucas Oliveira', 'Assistente de Silo', '11987654321', '11998765432', 'lucas.oliveira@sptech.school', md5('OlivSPTech21')),
-(DEFAULT, 3, 2, 'Felipe Santos', 'Operador de Silo', '1133998877', '11987659876', 'felipe.santos@sojaforte.com', md5('Paralelepipedo@2022')),
-(DEFAULT, 3, 2, 'Juliana Costa', 'Coordenadora de Armazenagem', '1133556677', '11987555678', 'juliana.costa@sojaforte.com', md5('JUERtu265_')),
-(DEFAULT, 5, 3, 'Paulo Henrique', 'Gerente de Operações', '1144556688', '11998877654', 'paulo.henrique@silomax.com', md5('MCR_2008')),
-(DEFAULT, 5, 3, 'Renata Almeida', 'Técnica de Manutenção', '1144332255', '11987653456', 'renata.almeida@silomax.com', md5('Abcde1234@')),
-(DEFAULT, 7, 4, 'José Pereira', 'Engenheiro de Produção', '1144772233', '11987651234', 'jose.pereira@agrosilva.com', md5('Pereira2102@'));
+(DEFAULT, 1, 1, 'Claudio Frizzarini', 'Gerente de Silo', '11973458648', '1136547823', 'claudio.frizzarini@sptech.school' , md5('Frizza2024@')),
+(DEFAULT, 1, 1, 'Lucas Oliveira', 'Assistente de Silo', '11987654321', '1199876543', 'lucas.oliveira@sptech.school', md5('OlivSPTech21')),
+(DEFAULT, 3, 2, 'Felipe Santos', 'Operador de Silo', '1133998877', '1198765987', 'felipe.santos@sojaforte.com', md5('Paralelepipedo@2022')),
+(DEFAULT, 3, 2, 'Juliana Costa', 'Coordenadora de Armazenagem', '1133556677', '1198755567', 'juliana.costa@sojaforte.com', md5('JUERtu265_')),
+(DEFAULT, 5, 3, 'Paulo Henrique', 'Gerente de Operações', '1144556688', '1199887765', 'paulo.henrique@silomax.com', md5('MCR_2008')),
+(DEFAULT, 5, 3, 'Renata Almeida', 'Técnica de Manutenção', '1144332255', '1198765345', 'renata.almeida@silomax.com', md5('Abcde1234@')),
+(DEFAULT, 7, 4, 'José Pereira', 'Engenheiro de Produção', '1144772233', '1198765123', 'jose.pereira@agrosilva.com', md5('Pereira2102@'));
 
 ALTER TABLE empresa ADD COLUMN fk_responsavel INT;
 
@@ -103,7 +103,7 @@ CREATE TABLE sensor (
         REFERENCES silo (idSilo)
 );
 
-INSERT INTO sensores VALUES
+INSERT INTO sensor VALUES
 (DEFAULT, '2023-12-22', '5.12', '2024-02-04 14:25:33', 'Amarela', 'Sim', 'Ativo', '2024-05-13', 1),
 (DEFAULT, '2023-12-22', '4.15', '2024-02-05 10:30:45', 'Verde', 'Não', 'Ativo', '2024-05-13', 1),
 (DEFAULT, '2023-12-23', '11.20', '2024-02-06 08:20:10', 'Vermelha', 'Sim', 'Ativo', '2023-12-23', 2),
@@ -119,17 +119,17 @@ INSERT INTO sensores VALUES
 
 -- ideias de select:
 -- select com empresa, usuário, silos da empresa, sensor do silo e bandeiras  
-select e.nome as 'Nome da empresa', e.cnpj as 'CNPJ',
+select e.nomefantasia as 'Nome da empresa', e.cnpj as 'CNPJ',
 u.nome as 'Usuários da Empresa', u.email as 'E-mail',
 silo.idSilo as 'Indentificador Silo',
-sensor.idSensores as 'Indentificador Sensor', sensor.perigoBandeira as 'Bandeira de Perigosidade'
+sensor.idSensor as 'Indentificador Sensor', sensor.perigoBandeira as 'Bandeira de Perigosidade'
 from usuario as u
 join empresa as e		
-on e.idEmpresa = u.fkEmpresa	-- esse select não funciona adequadamente devido a modelagem que optamos fazer, tem duas opções: mudar a modelagem pra ficar certinho ou desistir desse mesmo	
+on e.idEmpresa = u.fk_empresa	-- esse select não funciona adequadamente devido a modelagem que optamos fazer, tem duas opções: mudar a modelagem pra ficar certinho ou desistir desse mesmo	
 join silo 
 on silo.fk_empresa = e.idEmpresa
-join sensores as sensor
+join sensor
 on sensor.fk_silo = silo.idSilo 
-where fk_empresa = 1 order by u.nome;
+where u.fk_empresa = 1 order by u.nome;
 
 -- select com só empresa do frizza, sensores, ultima detecção, %gas, bandeira
