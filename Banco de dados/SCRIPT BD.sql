@@ -1,6 +1,6 @@
-CREATE DATABASE silosignal;
+CREATE DATABASE silotech;
 
-USE silosignal;
+USE silotech;
 
 CREATE TABLE empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,

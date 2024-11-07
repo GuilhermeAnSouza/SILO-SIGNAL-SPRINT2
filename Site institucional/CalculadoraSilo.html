@@ -106,12 +106,21 @@
 
 <script>
 
+    div_mensagem1.style.display = 'none'
+    div_mensagem2.style.display = 'none'
+    div_mensagem3.style.display = 'none'
+
     div1.style.display = 'block'
     div2.style.display = 'none'
     div3.style.display = 'block'
     div4.style.display = 'none'
 
     function verificar() {
+
+        div_mensagem1.style.display = 'none'
+        div_mensagem2.style.display = 'none'
+        div_mensagem3.style.display = 'none'
+
         var silo = Number(inputSilos.value)
         var mensagem = ''
         div_mensagem1.innerHTML = ''
@@ -166,6 +175,11 @@
 
 
     function calcular() {
+
+        div_mensagem1.style.display = 'block'
+        div_mensagem2.style.display = 'block'
+        div_mensagem3.style.display = 'block'
+
         var totalCapacidade = 0
         var totalPreenchimento = 0
         var totalPreco = 0

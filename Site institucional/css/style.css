@@ -77,7 +77,7 @@ body {
     background-color: #8AA032;
     display: flex;
     flex-direction: row;
-    height: 640px;
+    height: auto;
     padding: 40px;
 }
 
@@ -374,7 +374,8 @@ main.conteudo {
     background-size: cover; 
     background-position: center;
     background-attachment: fixed; 
-    width: 100%;
+    width: 100vw;
+    height: 100wh;
     background-color: #8AA032;
     display: flex;
     justify-content: center;
@@ -423,7 +424,7 @@ main.conteudo .containerCadastro {
     background-color: rgba(47, 58, 78, 0.948);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 30px;
+    padding: 10px;
     text-align: center;
     transition: box-shadow 0.3s ease-in-out;
 }
@@ -481,6 +482,7 @@ main.conteudo .input {
     padding: 12px;
     margin-bottom: 12px;
     background-color:  rgba(47, 58, 78, 0.948);
+    outline-style: none;
     color: #ffffffd9;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -500,6 +502,7 @@ main.conteudo .subcontainer input {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+    outline-style: none;
 }
 main.conteudo button[type="submit"] {
     background-color: #ff9800;
