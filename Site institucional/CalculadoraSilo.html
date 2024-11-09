@@ -10,10 +10,10 @@
 </head>
 
 <body>
-    <div class="header" id="header">
+    <header class="header">
         <div class="header-container">
             <a href="homepage.html"><img src="./assets/img/logo2.jpg" alt="" class="logo"></a>
-
+            
             <ul class="navbar">
                 <li>
                     <a href="homepage.html#servicos">Serviços</a>
@@ -33,46 +33,52 @@
                 </li>
             </ul>
         </div>
+    </header>
+
+    <div class="conteudo-calculadora">
+        <div class="container-calculadora">
+            <div class="titulo">
+                <h1>SIMULADOR FINANCEIRO</h1>
+            </div>
+        <div class="conteudo-input">
+            <div class="input-esquerda">
+                        <div id="div1">
+                            Quantidade de silos: <input type="number" id="inputSilos"> <br>
+                        </div>
+                
+                        <div id="div2">
+                            Eles estão próximos?
+                            <select id="selectProximo">
+                                <option>Sim</option>
+                                <option>Não</option>
+                            </select>
+                            <br>
+                        </div>
+                
+                        <div id="div3">
+                            Valor da cota de soja: <input type="number" id="inputSoja">
+                        </div>
+                
+                        <button onclick="verificar()">Ver Silos</button>
+            </div>
+            <div class="input-meio">    
+                <div id="div_mensagem"></div>
+                <div id="div4">
+                    <button onclick="calcular()">Calcular</button>
+                </div>    
+            </div>
+            <div class="input-direita">
+                <div id="div_mensagem1"></div>
+                <div id="div_mensagem2"></div>
+                <div id="div_mensagem3"></div>
+                <div id="div_mensagem4"></div>
+            </div>
+        </div>
+        </div>    
     </div>
+     
 
-    <div class="container-calculadora">
-        <div class="titulo">
-            <h1>SIMULADOR FINANCEIRO - SILO TECH</h1>
-        </div>
-        <div id="div1">
-            Quantidade de silos: <input type="number" id="inputSilos"> <br>
-        </div>
-
-        <div id="div2">
-            Eles estão próximos?
-            <select id="selectProximo">
-                <option>Sim</option>
-                <option>Não</option>
-            </select>
-            <br>
-        </div>
-
-        <div id="div3">
-            Valor da cota de soja: <input type="number" id="inputSoja">
-        </div>
-
-        <button onclick="verificar()">Ver Silos</button>
-
-        
-        
-        <div id="div_mensagem"></div>
-        <div id="div4">
-            <button onclick="calcular()">Calcular</button>
-        </div>
-        <div id="div_mensagem1"></div>
-        <div id="div_mensagem2"></div>
-        <div id="div_mensagem3"></div>
-        <div id="div_mensagem4"></div>
-        
-
-    </div>
-
-    <div class="footer">
+    <footer class="footer">
         <div class="container">
             <div>
                 <h1 class="titulo">SiloTech</h1>
@@ -99,7 +105,8 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </footer>
+
 </body>
 
 </html>
