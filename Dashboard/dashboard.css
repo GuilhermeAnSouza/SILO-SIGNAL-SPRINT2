@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+}
+
+.menu-lateral {
+    width: 150px;
+    height: 150vh;
+    background-color: #2a3d66;
+    /* Azul escuro */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-titulo {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #ffffff;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #091020;
+}
+
+.sair {
+    margin-top: auto;
+    background-color: #424242;
+}
+
+.sair:hover {
+    background-color: #000000ca;
+}
+
+.mensagem-user h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #091020;
+    width: 100%;
+    height: 20px;
+    color: #fff;
+}
+
+.conteudo {
+    padding: 150px;
+    flex-wrap: nowrap;
+    align-items: center;
+    /* flex-grow: 1; */
+    display: flex;
+    flex-direction: row;
+    background-color: #353a50;
+}
+
+.container {
+    width: 30%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.grafico-geral {
+    width: 700px;
+    height: 550px;
+    align-items: center;
+    flex-grow: 1;
+    padding-left: 55px;
+}
+
+.kpi1,
+.kpi2 {
+    width: 250px;
+    height: 150px;
+    background-color: #4ed687;
+    border: 1px solid #fdfbfb;
+    border-radius: 15px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kpi1 p,
+.kpi2 p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.kpi-bandeira {
+    width: 350px;
+    height: 250px;
+    background-color: #4ed687;
+    border: 1px solid #fdfbfb;
+    border-radius: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #353a50;
+
+}
+
+.kpi-bandeira h3 {
+    text-align: center;
+}
+
+.kpi-bandeira p {
+    text-align: left;
+}
+
+/* Gráfico de linhas geral */

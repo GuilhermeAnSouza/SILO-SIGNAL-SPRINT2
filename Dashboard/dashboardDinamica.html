@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Lateral</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <div class="menu-lateral">
+        <h2 class="menu-titulo">SiloTech | <br>Menu</h2>
+        <a href="#visao-geral" class="menu-item">Visão Geral</a>
+        <a href="#silos-individuais" class="menu-item">Silos Individuais</a>
+        <a href="#configuracoes" class="menu-item">Configurações</a>
+        <a href="#sair" class="menu-item sair">Sair</a>
+    </div>
+
+    <div class="mensagem-user">
+        <h2>Bem-vindo, usuário!</h2>
+    </div>
+    
+    <div class="conteudo">
+        <div class="container">
+            <div class="kpi1">
+                <p>status atual <br> SILO 1</p>
+            </div>
+            <div class="kpi2">
+                <p>status atual <br> SILO 2</p>
+            </div>
+            <div class="kpi-bandeira">
+                <h3>Bandeiras, porcentagens e classificações</h3>
+                <p>verde até 4%</p>
+                <p>de 5% a 9%</p>
+                <p>de 10% a 15%</p>
+            </div>
+        </div>
+        <div class="grafico-geral">
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
