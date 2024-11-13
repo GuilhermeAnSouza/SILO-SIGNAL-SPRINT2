@@ -75,6 +75,51 @@
                 <option value="silo2">SILO 2</option>
             </select>
             <div id="divMensagem"></div>
+            <div id="dashboard-Silo1-ind">
+                <div id="container-kpi-ind">
+                    <div class="mini-container">
+                        <div class="kpi1">
+                            <p>STATUS ATUAL</p>
+                            <p>SILO 1</p>
+                            <div class="porcentagem-silo">
+                                <div id="statusSilo1"></div>
+                                <span id="silo1_porcentagem">2.89%</span> <!--esse dado precisa ser dinamico-->
+                            </div>
+                        </div>
+
+                        <div id="tendencia-silo1">
+                            <span>Tendencia de vazamento para o proximo mês</span>
+                            <span>XP.TO%</span>
+                        </div>
+
+
+                    </div>
+                    <div class="kpi-bandeira-individual">
+                        <h3>Níveis de porcentagem de gás e bandeiras</h3>
+                        <div class="legenda-status">
+                            <div id="status-ok"></div><span>verde até 4%</span>
+                        </div>
+                        <div class="legenda-status">
+                            <div id="status-atencao"></div><span>amarelo de 5% a 9%</span>
+                        </div>
+                        <div class="legenda-status">
+                            <div id="status-emergencia"></div><span> vermelho de 10% a 15%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grafico-geral">
+                    <canvas id="Silo1_Semanas"></canvas>
+                </div>
+                <div class="grafico-geral">
+                    <canvas id="Silo1_meiaHora"></canvas>
+                </div>
+                <div class="grafico-geral">
+                    <canvas id="Silo1_Semestre"></canvas>
+                </div>
+
+
+            </div>
 
 
         </div>
@@ -111,15 +156,15 @@
         subTitulo.innerHTML = `Configurações`;
     }
 
-    function selecionarSilo(){
+    function selecionarSilo() {
         var siloSelecionado = select_silo.value;
-        if (siloSelecionado == '#'){
+        if (siloSelecionado == '#') {
             divMensagem.innerHTML = ``
         } else if (siloSelecionado == 'silo1') {
             divMensagem.innerHTML = 'silo 1 selecionado com sucesso'
         } else if (siloSelecionado == 'silo2') {
             divMensagem.innerHTML = 'silo 2 selecionado com sucesso'
-    
+
         }
     }
     //grafico de linha geral
@@ -147,47 +192,47 @@
             }]
         },
         options: {
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    color: 'rgb(255, 255, 255)',
-                    font: {
-                        size: 16,
-                        weight: 'bold'
-                    },
-                    boxWidth: 20,
-                    padding: 15
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    drawOnChartArea: false 
-                },
-                ticks: {
-                    font: {
-                        size: 16 
-                    },
-                    color: 'rgb(255, 255, 255)' 
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: 'rgb(255, 255, 255)',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        },
+                        boxWidth: 20,
+                        padding: 15
+                    }
                 }
             },
-            x: {
-                grid: {
-                    drawOnChartArea: false 
-                },
-                ticks: {
-                    font: {
-                        size: 16
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
                     },
-                    color: 'rgb(255, 255, 255)'
+                    ticks: {
+                        font: {
+                            size: 16
+                        },
+                        color: 'rgb(255, 255, 255)'
+                    }
+                },
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 16
+                        },
+                        color: 'rgb(255, 255, 255)'
+                    }
                 }
             }
         }
-    }
-});
+    });
 
 </script>

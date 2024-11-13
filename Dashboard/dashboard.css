@@ -180,6 +180,7 @@ body {
 
 #visaoIndividual {
     display: none;
+    flex-direction: column;
 }
 
 #visaoConfig {
