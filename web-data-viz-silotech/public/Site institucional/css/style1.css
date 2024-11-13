@@ -1,0 +1,176 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #8AA032;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: rgba(47, 58, 78, 1);
+    height: 80px;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 1.0s ease;
+}
+
+.header-container {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.header a{
+    text-decoration: none;
+    color: #FBAF00;
+}
+
+.navbar {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+    color: #FBAF00;
+}
+
+.logo {
+    width: 200px;
+    height: 80px;
+    background-color: rgba(47, 58, 78, 1);
+    transition: background-color 1.0s ease;
+    object-fit: cover;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FBAF00;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    /* -webkit-text-stroke-color: #2F3A4E;
+    -webkit-text-stroke-width: 0.5px; */
+}
+
+.container-calculadora {
+    background-color: #F9F9F7;
+    border-radius: 20px;
+    margin: 30px;
+    padding: 20px;
+}
+
+.conteudo-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-esquerda {
+    width: 300px;
+}
+
+/* MEXENDO EM TODAS AS DIVS PARA QUE FIQUEM PADRONIZADOS */
+.input-esquerda div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto;
+}
+/* MEXENDO EM TODOS OS INPUTS PRA QUE FIQUEM PADRONIZADOS */
+input[type="number"], select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 250px;
+    /* width: calc(50% - 22px); Adapta o tamanho */
+}
+/* MEXENDO NO BOTÃO PRA FICAR IGUAL AO RESTANTE DA PÁGINA */
+button {
+    padding: 10px 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #FBAF00;
+    border: 1px solid black;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2F3A4E;
+    color: #FBAF00;
+}
+
+/* MUDANDO A POSIÇÃO DAS IMAGENS */
+#div_mensagem img {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100px;
+    height: auto;
+    margin: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+#div_mensagem img:hover {
+    border-color: #FBAF00;
+}
+
+/* MUDANDO TODAS AS DIV_MENSAGENS PRA FICA TUDO PADRÃO */
+.input-direita div {
+    width: 300px;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#div_mensagem3 {
+    margin-bottom: 70px;
+}
+
+
+.footer {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #2F3A4E;
+    height: 150px;
+    color: rgb(251, 175, 0);
+    display: flex;
+    font-size: 15px;
+}
+
+.footer .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center; }
+
+.fale-conosco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fale-conosco p {
+    padding-top: 15px;
+    font-size: 18px;
+    margin: 0;
+}
+
+.a-fale-conosco {
+    text-decoration: none;
+    color: inherit;
+}
