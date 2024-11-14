@@ -16,6 +16,7 @@
             <button onclick="mostrarGeral()">Visão Geral</button>
             <button onclick="mostrarIndividual()">Silos Individuais</button>
             <button onclick="mostrarConfig()">Configurações</button>
+            <button onclick="mostrarAjuda()">Ajuda</button>
         </div>
 
         <a href="../Site institucional/homepage.html"><img src="" alt="sair"></a>
@@ -126,8 +127,25 @@
 
 
 
+
         <div id="visaoConfig">
             aqui sera as configurações
+        </div>
+
+        <div id="visaoAjuda">
+            <div id="container-ajuda">
+                <div id="validacao">
+                    Qual tipo de ajuda está buscando?
+                    <button>Cliente</button>
+                    <button onclick="validarTec()">Técnico</button>
+                </div>
+                <div id="validacao-tec">
+                    <span>Por favor, insira a chave técnica da empresa</span>
+                    <input type="text" id="iptChave">
+                    <button onclick="validarChave()">Validar</button>                   
+                    <button onclick="voltarValidacao()">voltar</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -141,19 +159,61 @@
         document.getElementById('visaoGeral').style.display = 'flex';
         document.getElementById('visaoIndividual').style.display = 'none';
         document.getElementById('visaoConfig').style.display = 'none';
+        document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `DashBoard Geral`;
     }
     function mostrarIndividual() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'flex'
         document.getElementById('visaoConfig').style.display = 'none'
+        document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `DashBoard Individual`;
     }
     function mostrarConfig() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'none'
         document.getElementById('visaoConfig').style.display = 'flex'
+        document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `Configurações`;
+    }
+
+    function mostrarAjuda() {
+        document.getElementById('visaoGeral').style.display = 'none';
+        document.getElementById('visaoIndividual').style.display = 'none';
+        document.getElementById('visaoConfig').style.display = 'none';
+        document.getElementById('visaoAjuda').style.display = 'flex';
+        subTitulo.innerHTML = `sessao de ajuda titulo`;
+        document.getElementById('container-ajuda').style.display = 'flex';
+    }
+
+    function validarTec(){
+        document.getElementById('validacao').style.display = 'none';
+        document.getElementById('validacao-tec').style.display = 'flex';
+    }
+
+    var chaveTeste = '123oi';
+    
+    function validarChave(){
+        var chave = iptChave.value;
+        var validado = false;
+
+        if (chave == chaveTeste){
+            validado = true;
+        } else {
+            validado = false
+        }
+
+        if(validado){
+            alert('substitua esse alert pelo link da bobIA')
+        } else {
+            alert('chave não valida')
+        }
+
+    }
+
+    function voltarValidacao(){
+        document.getElementById('validacao').style.display = 'flex';
+        document.getElementById('validacao-tec').style.display = 'none';   
     }
 
     function selecionarSilo() {

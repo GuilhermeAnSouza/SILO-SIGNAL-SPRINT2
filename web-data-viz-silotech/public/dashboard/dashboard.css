@@ -187,6 +187,28 @@ body {
     display: none;
 }
 
+#visaoAjuda {
+    display: none;
+}
+
+#container-ajuda {
+    display: none;
+    flex-direction: column;
+    width: 500px;
+    height: 300px;
+    background-color: #353a50;
+}
+
+#validacao {
+    display: flex;
+    flex-direction: column;
+}
+
+#validacao-tec {
+    display: none;
+    flex-direction: column;
+}
+
 .porcentagem-silo {
     display: flex;
     flex-direction: row;
