@@ -194,6 +194,22 @@ function validarTel() {
     exibirErro()
 }
 
+function validarTelEmpresa() {
+    var tel = iptTel.value;
+
+    var qtdDigitos = tel.length;
+
+    if (qtdDigitos == 8 || qtdDigitos == 10) {
+        validTel = true;
+        errorMensage = '';
+    } else {
+        validTel = false;
+        errorMensage = 'Insira um número de telefone válido';
+    }
+
+    exibirErro()
+}
+
 var password = '';
 var validPassword = false
 
@@ -276,7 +292,7 @@ function exibirErroLogin() {
 
 var validarEmailUSer = false
 function validarEmailLogin() {
-    email = userEmail.value;
+    email = email_input.value;
 
     var qtdDigitos = email.length;
 
@@ -310,7 +326,7 @@ var passwordLogin = '';
 var validPasswordLogin = false
 
 function validarPasswordLogin() {
-    password = iptUserPassword.value;
+    password = senha_input.value;
 
     var qtdDigitos = password.length;
     

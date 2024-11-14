@@ -11,6 +11,13 @@ CREATE TABLE empresa (
     fk_responsavel INT
 );
 
+insert into empresa (razaoSocial, cnpj, telComercial, email) values
+('Sojas 1000 grau', '12345678914527', '11236589741', 'soja1000grau@gmail.com');
+
+select * from empresa;
+
+update empresa set fk_responsavel = 1 where idEmpresa = 1;
+
 create table usuario (
 	idUsuario int primary key auto_increment,
     nome varchar(45),
@@ -22,6 +29,16 @@ create table usuario (
     fk_empresa int,
     constraint fkUsuarioEmpresa foreign key (fk_empresa) references empresa(idEmpresa)
 );
+
+insert into usuario (nome, telComercial, email, senha) values
+('Joaozinho', '11948791977', 'joao@hotmail.com', 'Marcelo@2010');
+
+insert into usuario (nome, telComercial, email, senha) values
+('Guilherme', '11948794499', 'guilherme@hotmail.com', 'Gui@2020');
+
+update usuario set fk_empresa = 1 where idUsuario = 2;
+
+select * from usuario;
 
 alter table empresa add constraint fkResponsavelEmpresa foreign key (fk_responsavel) references usuario(idUsuario); 
 
@@ -46,14 +63,4 @@ CREATE TABLE sensor (
     alerta varchar(45),
     fk_silo INT,
     constraint chkFuncionamentoSensor check(statusFuncionamento in ('Ativo', 'Inativo'))
-);
-
--- perguntar pra julia/ fernando
-
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(idUsuario)
 );
