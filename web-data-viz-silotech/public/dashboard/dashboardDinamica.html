@@ -10,62 +10,74 @@
 </head>
 
 <body>
-    <div class="menu-lateral">
-        <span class="menu-titulo">SiloTech | Menu</span>
-        <div id="menu-opcoes">
-            <button onclick="mostrarGeral()">Visão Geral</button>
-            <button onclick="mostrarIndividual()">Silos Individuais</button>
-            <button onclick="mostrarConfig()">Configurações</button>
-            <button onclick="mostrarAjuda()">Ajuda</button>
+
+<div class="conteudo-geral">
+
+    <div class="container-menu">
+
+        <div class="menu-lateral">
+            <div id="menu-titulo"><img src="assets/logo4.jpg"></div>
+            <div class="menu-opcoes">
+                <img src="assets/house.png" onclick="mostrarGeral()">
+                <img src="assets/chart-line.png" onclick="mostrarIndividual()">
+                <img src="assets/gear.png" onclick="mostrarConfig()">
+                <img src="assets/question.png" onclick="mostrarAjuda()">
+            </div>
+            <a id="menu-sair" href="../index.html"><img src="assets/sign-out.png"></a>
         </div>
 
-        <a href="../Site institucional/homepage.html"><img src="" alt="sair"></a>
     </div>
-    <div id="container">
 
-        <span id="container-titulo">Bem-vindo(a) usuário!</span>
-        <br>
-        <span id="subTitulo"></span>
+    <div class="container-conteudo">
 
+        <div id="container-titulo">Bem-vindo(a), usuário!</div>
+        
+        <div id="subTitulo">Visão Geral</div>
+        
         <div id="visaoGeral">
 
             <div id="container-kpiGeral">
                 <div class="kpi1">
                     <p>STATUS ATUAL</p>
-                    <p>SILO 1</p>
+                    <p class="nome-silo">SILO 1</p>
                     <div class="porcentagem-silo">
                         <div id="statusSilo1"></div>
-                        <span id="silo1_porcentagem">1.56%</span> <!--esse dado precisa ser dinamico-->
+                        <span id="silo1_porcentagem">1.56%</span> 
+                        <!-- esse dado precisa ser dinamico -->
                     </div>
                 </div>
 
                 <div class="kpi2">
                     <p>STATUS ATUAL</p>
-                    <p>SILO 2</p>
+                    <p class="nome-silo">SILO 2</p>
                     <div class="porcentagem-silo">
                         <div id="statusSilo2"></div>
-                        <span id="silo2_porcentagem">2.89%</span> <!--esse dado precisa ser dinamico-->
+                        <span id="silo2_porcentagem">2.89%</span> 
+                        <!-- esse dado precisa ser dinamico -->
                     </div>
                 </div>
 
-                <div class="kpi-bandeira">
-                    <h3>Bandeiras, Porcentagens e Classificações</h3>
-                    <div class="legenda-status">
-                        <div id="status-ok"></div><span>verde até 4%</span>
+                    
+            </div>
+            
+            <div class="kpi-bandeira">
+                <h3>Legenda</h3>
+                <div class="legenda-status">
+                    <div class="legenda-ok">
+                        <div id="status-ok"></div><span>OK: 0% - 4%</span>
                     </div>
-                    <div class="legenda-status">
-                        <div id="status-atencao"></div><span>amarelo de 5% a 9%</span>
+                    <div class="legenda-atencao">
+                        <div id="status-atencao"></div><span>Atenção: 5% - 9%</span>
                     </div>
-                    <div class="legenda-status">
-                        <div id="status-emergencia"></div><span> vermelho de 10% a 15%</span>
+                    <div class="legenda-alerta">
+                        <div id="status-alerta"></div><span>Alerta: 10% - 15%</span>
                     </div>
                 </div>
             </div>
-
-
-            <div class="grafico-geral">
+            
+            <!-- <div class="grafico-geral">
                 <canvas id="myChart"></canvas>
-            </div>
+            </div> -->
 
         </div>
 
@@ -93,7 +105,7 @@
                             <span>XP.TO%</span>
                         </div>
 
-
+                        
                     </div>
                     <div class="kpi-bandeira-individual">
                         <h3>Níveis de porcentagem de gás e bandeiras</h3>
@@ -125,13 +137,13 @@
 
         </div>
 
-
-
-
+        
+        
+        
         <div id="visaoConfig">
             aqui sera as configurações
         </div>
-
+        
         <div id="visaoAjuda">
             <div id="container-ajuda">
                 <div id="validacao">
@@ -148,19 +160,21 @@
             </div>
         </div>
     </div>
+
+</div>
 </body>
 
 </html>
 
 <script>
-
+    document.getElementById('visaoGeral').style.display = 'flex';
     //funcoes para aparecer e desaparecer cada div
     function mostrarGeral() {
         document.getElementById('visaoGeral').style.display = 'flex';
         document.getElementById('visaoIndividual').style.display = 'none';
         document.getElementById('visaoConfig').style.display = 'none';
         document.getElementById('visaoAjuda').style.display = 'none';
-        subTitulo.innerHTML = `DashBoard Geral`;
+        subTitulo.innerHTML = `Visão Geral`;
     }
     function mostrarIndividual() {
         document.getElementById('visaoGeral').style.display = 'none'
