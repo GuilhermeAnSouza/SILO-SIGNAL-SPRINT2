@@ -377,11 +377,11 @@ function validarPasswordLogin() {
 //validar se a senha possui 8 digitos, 1 caractere especial e um número
 
 // header transparente quando rola a pagina
-window.addEventListener('scroll', function() {
-    var header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.style.backgroundColor = 'rgba(47, 58, 78, 0.8)';
-    } else {
-        header.style.backgroundColor = 'rgba(47, 58, 78, 1)';
-    }
-});
+// window.addEventListener('scroll', function() {
+//     var header = document.getElementById('header');
+//     if (window.scrollY > 50) {
+//         header.style.backgroundColor = 'rgba(47, 58, 78, 0.8)';
+//     } else {
+//         header.style.backgroundColor = 'rgba(47, 58, 78, 1)';
+//     }
+// });

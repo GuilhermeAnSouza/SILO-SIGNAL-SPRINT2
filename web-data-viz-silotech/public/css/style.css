@@ -369,6 +369,29 @@ body {
 }
 
 /* Centraliza o conteúdo e ajusta a margem e espaçamento */
+
+.alerta_erro{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .card_erro {
+    display: none;
+    background-color: #fff;
+    color: black;
+    width: 230px;
+    position: fixed;
+    border-radius: 4px;
+    border: #ED145B 3px solid;
+    padding: 10px;
+    margin-right: 10%;
+  }
+  
+  .card_erro #mensagem_erro{
+    font-weight: 500;
+    font-size: 20px;
+  }
+
 main.conteudo {
     background-image: url('https://static.vecteezy.com/ti/fotos-gratis/p1/30709545-grao-silos-dentro-a-meio-do-largo-verde-campos-em-uma-ensolarado-dia-generativo-ai-gratis-foto.jpg'); /* Caminho da imagem */
     background-size: cover; 

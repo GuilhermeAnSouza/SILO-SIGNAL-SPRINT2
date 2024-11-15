@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    
+    <script src="./js/sessao.js"></script>
+
+    <link rel="icon" href="./assets/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="./css/style.css">
+    
+</head>
+
+<body class="cadastro_page" onload="listar()">
+    <main class="conteudo">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div class="containerCadastro" id="conteudoEmpresa" style="display: flex;">
+            <form class="formCadastro">
+                <a href="homepage.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                <span class="tittleLog tituloCadastro">Cadastre-se</span>
+                <div id="cadastroEmpresa">
+                    <p class="subTittle"><span>Empresa</span></p>
+
+                    <label for="nameEmpresa">
+                        <p>Razão Social*: </p>
+                        <input type="text" id="razaoSocial_input" class="input" name="nameEmpresa">
+                    </label>
+
+                    <div class="subcontainer">
+                        <label for="iptCNPJ">
+                            <p>CNPJ*:</p>
+                            <input type="number" id="cnpj_input" name="iptCNPJ">
+                        </label>
+
+                        <label for="iptTel">
+                            <p>Telefone:</p>
+                            <input type="number" id="telEmp_input" name="iptTel">
+                        </label>
+                    </div>
+
+                    <label for="iptEmailEmpresa">
+                        <p>Email Corporativo*:</p>
+                        <input type="email" id="emailEmpresa_input" class="input" name="iptEmailEmpresa">
+                    </label>
+                    <label for="iptCodAtvEmpresa">
+                        <p>Codigo ativação:</p>
+                        <input type="email" id="codigoAtivacao_input" class="input" name="iptCodAtvEmpresa">
+                    </label>
+                    <label for="iptCodTecEmpresa">
+                        <p>Codigo Técnico:</p>
+                        <input type="email" id="codigoTecnico_input" class="input" name="iptCodTecEmpresa">
+                    </label>
+                </div>
+                <div id="divError"></div>
+                <div class="container-button">
+                    <button type="submit" id="button_cadastro" onclick="cadastrarEmpresa()">Cadastre-se</button></a>
+
+                </div>
+                <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
+            </form>
+            <!-- <p>Já tem uma conta? <a href="login.html">Login</a></p> -->
+            <div id="div_aguardar" class="loading-div">
+                <img src="./assets/circle-loading.gif" id="loading-gif" />
+              </div>
+      
+              <div id="div_erros_login"></div>
+        </div>
+    </main>
+
+</body>
+
+</html>
+
+<script>
+    let listaEmpresasCadastradas = [];
+
+    function cadastrarEmpresa() {
+        // função para travar o redirecionamento 
+        // event.preventDefault();
+
+
+        // aguardar();
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var razaoSocialvar = razaoSocial_input.value;
+        var cnpjVar = cnpj_input.value;
+        var telEmpVar = telEmp_input.value;
+        var emailEmpVar = emailEmpresa_input.value;
+        var codigoAtivacaoVar = codigoAtivacao_input.value;
+        var codigoTecnicoVar = codigoTecnico_input.value;
+        // var idEmpresaVincular
+
+        // Verificando se há algum campo em branco
+        if (
+            razaoSocialvar == "" ||
+            cnpjVar == "" ||
+            telEmpVar == "" ||
+            emailEmpVar == "" ||
+            codigoAtivacaoVar == "" ||
+            codigoTecnicoVar == ""
+        ) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML =
+                "Preencha todos os campos.";
+
+            finalizarAguardar();
+            return false;
+        } else if (razaoSocialvar.length < 2) {
+            cardErro.style.display = "block";
+            // nome_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um nome válido.";
+
+            finalizarAguardar();
+            return false;
+        } else if (cnpjVar.length != 14) {
+            cardErro.style.display = "block";
+            // cpf_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um CNPJ válido.";
+
+            finalizarAguardar();
+            return false;
+        } else if (telEmpVar.length != 11) {
+            cardErro.style.display = "block";
+            // cpf_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um Telefone válido.";
+
+            finalizarAguardar();
+            return false;
+        } else if (emailEmpVar.includes('@') == false) {
+            cardErro.style.display = "block";
+            // email_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um email válido.";
+
+            finalizarAguardar();
+            return false;
+        } else if (codigoAtivacaoVar.length <= 6) {
+            cardErro.style.display = "block";
+            // senha_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Seu código de ativação deve conter mais que 6 caracteres.";
+
+            finalizarAguardar();
+            return false;
+        } else if (codigoTecnicoVar.length < 5 || codigoTecnicoVar.length > 7) {
+            cardErro.style.display = "block";
+            // senha_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Seu código do técnico deve conter 6 caracteres.";
+
+            finalizarAguardar();
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000);
+        }
+
+        // Verificando se o código de ativação é de alguma empresa cadastrada
+        // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+        //     if (listaEmpresasCadastradas[i].codigoAtivacao == codigoVar) {
+        //         idEmpresaVincular = listaEmpresasCadastradas[i].id
+        //         console.log("Código de ativação válido.");
+        //         break;
+        //     } else {
+        //         cardErro.style.display = "block";
+        //         mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+        //         finalizarAguardar();
+        //     }
+        // }
+
+        // Enviando o valor da nova input
+        fetch("/empresas/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                razaoSocialServer: razaoSocialvar,
+                cnpjServer: cnpjVar,
+                telEmpServer: telEmpVar,
+                emailEmpServer: emailEmpVar,
+                codigoAtivacaoServer: codigoAtivacaoVar,
+                codigoTecnicoServer: codigoTecnicoVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    cardErro.style.display = "block";
+
+                    mensagem_erro.innerHTML =
+                        "Cadastro realizado com sucesso! Redirecionando para tela de cadastro do usuário...";
+
+                    setTimeout(() => {
+                        window.location = "cadastroUsuario.html";
+                    }, "2000");
+
+                    limparFormulario();
+                    finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
+        return false;
+
+
+        // aqui trava e redireciona para o cadastro do usuario
+        // window.location.href = event.currentTarget.getAttribute('href');
+    }
+
+    // Listando empresas cadastradas 
+    function listar() {
+        fetch("/empresas/listar", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                resposta.json().then((empresas) => {
+                    empresas.forEach((empresa) => {
+                        listaEmpresasCadastradas.push(empresa);
+
+                        console.log("listaEmpresasCadastradas")
+                        console.log(listaEmpresasCadastradas[0].codigoAtivacao)
+                    });
+                });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none";
+    }
+</script>

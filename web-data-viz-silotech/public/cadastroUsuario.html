@@ -11,54 +11,29 @@
 </head>
 
 <body class="cadastro_page">
-    <main class="conteudo">
-        <div class="containerCadastro">
+    <main class="conteudo" id="conteudoUsuario">
+        <div class="containerCadastro" id="conteudoUsuario">
             <form class="formCadastro">
-                <a href="homepage.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                <a href="./homepage.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
                 <span class="tittleLog tituloCadastro">Cadastre-se</span>
-                <div>
-                    <p class="subTittle"><span>Empresa</span></p>
-
-                    <label for="nameEmpresa">
-                        <p>Razão Social*: </p>
-                        <input type="text" id="nameEmpresa" class="input" name="nameEmpresa" oninput="validarNomeEmpresa()">
-                    </label>
-
-                    <div class="subcontainer">
-                        <label for="iptCNPJ">
-                            <p>CNPJ*:</p>
-                            <input type="number" id="iptCNPJ" name="iptCNPJ" oninput="validarCNPJ()">
-                        </label>
-
-                        <label for="iptTel">
-                            <p>Telefone:</p>
-                            <input type="number" id="iptTel" name="iptTel" oninput="validarTelEmpresa()">
-                        </label>
-                    </div>
-
-                    <label for="iptEmailEmpresa">
-                        <p>Email Corporativo*:</p>
-                        <input type="email" id="iptEmailEmpresa" class="input" name="iptEmailEmpresa" oninput="validarEmailEmpresa()">
-                    </label>
-                </div>
-                <div>
+                <div id="cadastroUsuario">
                     <p class="subTittle"><span>Usuário</span></p>
-
+            
                     <label for="iptName">
                         <p>Nome*: </p>
                         <input type="text" id="iptName" name="iptName" class="input" oninput="validarNome()">
                     </label>
-
+            
                     <label for="iptEmail">
                         <p>Email Pessoal*: </p>
                         <input type="email" id="iptEmail" class="input" name="iptEmail" oninput="validarEmail()">
                     </label>
-
+            
                     <label for="telComercial">
                         <p>Telefone Comercial*: </p>
                         <input type="number" id="telComercial" class="input" name="telComercial" oninput="validarTel()">
                     </label>
-
+            
                     <div class="subcontainer">
                         <label for="iptPassword">
                             <p>Senha*: </p>
@@ -69,11 +44,11 @@
                             <input type="password" id="ipt_confirmPassword" name="ipt_confirmPassword" oninput="confirmPassword()">
                         </label>
                     </div>
-
+            
                 </div>
                 <div id="divError"></div>
                 <div class="container-button">
-                    <button type="submit" id="button_cadastro">Cadastre-se</button>
+                    <button type="submit" id="button_cadastro" onclick="cadastrarUsuario()" >Cadastrar usuário</button>
                 </div>
 
                 <span class="span_center">Já tem uma conta?  <a href="login.html"> Login</a></span>
@@ -81,6 +56,8 @@
             <!-- <p>Já tem uma conta? <a href="login.html">Login</a></p> -->
         </div>
     </main>
+
 </body>
 
 </html>
+
