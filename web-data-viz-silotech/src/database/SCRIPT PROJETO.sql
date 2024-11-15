@@ -6,8 +6,10 @@ CREATE TABLE empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
     razaoSocial VARCHAR(45),
     cnpj CHAR(14),
-    telComercial CHAR(11),
-    email VARCHAR(45),
+    telEmp CHAR(11),
+    emailEmp VARCHAR(45),
+    codigoAtivacao varchar(50),
+    codigoTecnico char(6),
     fk_responsavel INT
 );
 
@@ -64,3 +66,5 @@ CREATE TABLE sensor (
     fk_silo INT,
     constraint chkFuncionamentoSensor check(statusFuncionamento in ('Ativo', 'Inativo'))
 );
+
+drop database silosignal;
