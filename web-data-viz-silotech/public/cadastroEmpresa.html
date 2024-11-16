@@ -66,7 +66,7 @@
             </form>
             <!-- <p>Já tem uma conta? <a href="login.html">Login</a></p> -->
             <div id="div_aguardar" class="loading-div">
-                <img src="./assets/circle-loading.gif" id="loading-gif" />
+                <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
               </div>
       
               <div id="div_erros_login"></div>
@@ -152,7 +152,7 @@
 
             finalizarAguardar();
             return false;
-        } else if (codigoTecnicoVar.length < 5 || codigoTecnicoVar.length > 7) {
+        } else if (codigoTecnicoVar.length < 6 && codigoTecnicoVar.length > 6) {
             cardErro.style.display = "block";
             // senha_input.style.border = "2px solid red"
             mensagem_erro.innerHTML =
