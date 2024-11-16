@@ -1,8 +1,12 @@
+/* configuração geral */
+
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     background-color: #2a3d66;
 }
+
+/* Configuração para fazer a navbar lateral ficar sempre a esquerda e o conteúdo no lugar certo */
 
 .conteudo-geral {
     display: flex;
@@ -17,6 +21,8 @@ body {
     padding: 20px;
     margin-left: 30px;
 }
+
+/* Menu lateral */
 
 .menu-lateral {
     width: 30px;
@@ -61,6 +67,8 @@ body {
     justify-content: center;
 }
 
+/* Títulos dos conteúdos */
+
 #container-titulo {
     color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
@@ -78,6 +86,8 @@ body {
     margin-left: 0px;
     padding: 5px;
 }
+
+/* Tela de dashboards gerais */
 
 #visaoGeral {
     display: flex;
@@ -148,6 +158,8 @@ body {
     background-color: #e00000;
     border-radius: 20px;
 }
+
+/* Aqui tem a parte das legendas das dashs (o final ind é das telas individuais) */
 
 .kpi-bandeira {
     background-color: #353a50;
@@ -232,6 +244,8 @@ body {
 .kpi-bandeira h3 {
     text-align: center;
 }
+
+/* Tela individual Silos (aplicável para a tela do Silo 1 e 2) */
 
 #visaoIndividual {
     display: none;
@@ -335,9 +349,13 @@ body {
     height: 210px;
 }
 
+/* Tela de configurações */
+
 #visaoConfig {
     display: none;
 }
+
+/* Tela de suporte */
 
 #visaoAjuda {
     display: none;
@@ -360,7 +378,5 @@ body {
     display: none;
     flex-direction: column;
 }
-
-
 
 /* Gráfico de linhas geral */
