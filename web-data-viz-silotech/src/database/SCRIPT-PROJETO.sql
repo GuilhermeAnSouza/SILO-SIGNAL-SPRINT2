@@ -5,15 +5,15 @@ USE silosignal;
 CREATE TABLE empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
     razaoSocial VARCHAR(45),
-    cnpj CHAR(14),
+    cnpj CHAR(14) unique,
     telEmp CHAR(11),
     emailEmp VARCHAR(45),
-    codigoAtivacao varchar(50),
-    codigoTecnico char(6),
+    codigoAtivacao varchar(50) unique,
+    codigoTecnico char(6) unique,
     fk_responsavel INT
 );
 
-insert into empresa (razaoSocial, cnpj, telComercial, email) values
+insert into empresa (razaoSocial, cnpj, telEmp, emailEmp) values
 ('Sojas 1000 grau', '12345678914527', '11236589741', 'soja1000grau@gmail.com');
 
 select * from empresa;
@@ -67,4 +67,4 @@ CREATE TABLE sensor (
     constraint chkFuncionamentoSensor check(statusFuncionamento in ('Ativo', 'Inativo'))
 );
 
-drop database silosignal;
+-- drop database silosignal;

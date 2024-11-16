@@ -22,6 +22,12 @@ function buscarPorId(req, res) {
   });
 }
 
+function buscarPorCodigoTecnico(req, res) {
+  empresaModel.buscarCodigoTecnico(codigoTecnico).then((resultado) => {
+    res.status(200).json(resultado);
+  });
+}
+
 function cadastrar(req, res) {
   var razaoSocial = req.body.razaoSocialServer;
   var cnpj = req.body.cnpjServer;
@@ -43,9 +49,11 @@ function cadastrar(req, res) {
   });
 }
 
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
+  buscarPorCodigoTecnico,
   cadastrar,
   listar,
 };

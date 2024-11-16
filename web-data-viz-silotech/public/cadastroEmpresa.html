@@ -22,10 +22,10 @@
         </div>
         <div class="containerCadastro" id="conteudoEmpresa" style="display: flex;">
             <form class="formCadastro">
-                <a href="homepage.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
-                <span class="tittleLog tituloCadastro">Cadastre-se</span>
+                <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                <span class="tittleLog tituloCadastro">Cadastre Sua Empresa</span>
                 <div id="cadastroEmpresa">
-                    <p class="subTittle"><span>Empresa</span></p>
+                    <!-- <p class="subTittle"><span>Empresa</span></p> -->
 
                     <label for="nameEmpresa">
                         <p>Razão Social*: </p>
@@ -59,7 +59,7 @@
                 </div>
                 <!-- <div id="divError"></div> -->
                 <div class="container-button">
-                    <button type="submit" id="button_cadastro" onclick="cadastrarEmpresa()">Cadastre-se</button></a>
+                    <button type="submit" id="button_cadastro" onclick="cadastrarEmpresa()">Cadastrar Empresa</button></a>
 
                 </div>
                 <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
@@ -81,11 +81,11 @@
     let listaEmpresasCadastradas = [];
 
     function cadastrarEmpresa() {
-        // função para travar o redirecionamento 
-        // event.preventDefault();
+        //função para travar o redirecionamento 
+        event.preventDefault();
 
 
-        // aguardar();
+        aguardar();
 
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
@@ -109,15 +109,17 @@
             cardErro.style.display = "block";
             mensagem_erro.innerHTML =
                 "Preencha todos os campos.";
-
+            
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else if (razaoSocialvar.length < 2) {
+        } else if (razaoSocialvar.length < 5) {
             cardErro.style.display = "block";
             // nome_input.style.border = "2px solid red"
             mensagem_erro.innerHTML =
                 "Insira um nome válido.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
         } else if (cnpjVar.length != 14) {
@@ -126,22 +128,25 @@
             mensagem_erro.innerHTML =
                 "Insira um CNPJ válido.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else if (telEmpVar.length != 11) {
+        } else if (telEmpVar.length < 10) {
             cardErro.style.display = "block";
             // cpf_input.style.border = "2px solid red"
             mensagem_erro.innerHTML =
-                "Insira um Telefone válido.";
+                "Insira um telefone válido.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else if (emailEmpVar.includes('@') == false) {
+        } else if (emailEmpVar.includes('@') == false || emailEmpVar.includes('.') == false ) {
             cardErro.style.display = "block";
             // email_input.style.border = "2px solid red"
             mensagem_erro.innerHTML =
                 "Insira um email válido.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
         } else if (codigoAtivacaoVar.length <= 6) {
@@ -150,6 +155,7 @@
             mensagem_erro.innerHTML =
                 "Seu código de ativação deve conter mais que 6 caracteres.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
         } else if (codigoTecnicoVar.length < 6 && codigoTecnicoVar.length > 6) {
@@ -158,13 +164,13 @@
             mensagem_erro.innerHTML =
                 "Seu código do técnico deve conter 6 caracteres.";
 
+            setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else {
-            setInterval(sumirMensagem, 5000);
         }
 
-        // Verificando se o código de ativação é de alguma empresa cadastrada
+
+        // Verificando se o código de ativação já existe
         // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
         //     if (listaEmpresasCadastradas[i].codigoAtivacao == codigoVar) {
         //         idEmpresaVincular = listaEmpresasCadastradas[i].id
@@ -246,6 +252,12 @@
     }
 
     function sumirMensagem() {
+    console.log("Função sumirMensagem chamada"); // Verificação de execução
+    const cardErro = document.getElementById("cardErro");
+    if (cardErro) {
         cardErro.style.display = "none";
     }
+}
+
+
 </script>

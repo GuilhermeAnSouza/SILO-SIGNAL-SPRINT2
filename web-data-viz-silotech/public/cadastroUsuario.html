@@ -22,10 +22,10 @@
           </div>
         <div class="containerCadastro" id="conteudoUsuario">
             <form class="formCadastro">
-                <a href="./homepage.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
-                <span class="tittleLog tituloCadastro">Cadastre-se</span>
+                <a href="./index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                <span class="tittleLog tituloCadastro">Cadastre Seu Usuário</span>
                 <div id="cadastroUsuario">
-                    <p class="subTittle"><span>Usuário</span></p>
+                    <!-- <p class="subTittle"><span>Usuário</span></p> -->
 
                     <label for="codigoAtivacaoUsuario_input">
                         <p>Codigo ativação:</p>
@@ -61,7 +61,7 @@
                 </div>
                 <!-- <div id="divError"></div> -->
                 <div class="container-button">
-                    <button type="submit" id="button_cadastro" onclick="cadastrarUsuario()" >Cadastrar usuário</button>
+                    <button type="submit" id="button_cadastro" onclick="cadastrarUsuario()" >Cadastrar Usuário</button>
                 </div>
 
                 <span class="span_center">Já tem uma conta?  <a href="login.html"> Login</a></span>
@@ -85,6 +85,7 @@
     let listaEmpresasCadastradas = [];
   
     function cadastrarUsuario() {
+      event.preventDefault(); 
       // aguardar();
   
       //Recupere o valor da nova input pelo nome do id
@@ -95,7 +96,7 @@
       var senhaVar = senha_input.value;
       var confirmacaoSenhaVar = confirmaSenha_input.value;
       var codigoVar = codigoAtivacaoUsuario_input.value;
-      var idEmpresaVincular
+      // var idEmpresaVincular
   
       // Verificando se há algum campo em branco
       if (
@@ -109,23 +110,26 @@
         cardErro.style.display = "block";
         mensagem_erro.innerHTML =
           "Preencha todos os campos.";
-  
+        
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
-      } else if (nomeVar.length < 2) {
+      } else if (nomeVar.length < 5) {
         cardErro.style.display = "block";
         // nome_input.style.border = "2px solid red"
         mensagem_erro.innerHTML =
           "Insira um nome válido.";
   
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
-      } else if (telUsuarioVar.length != 11) {
+      } else if (telUsuarioVar.length < 10) {
         cardErro.style.display = "block";
         // cpf_input.style.border = "2px solid red"
         mensagem_erro.innerHTML =
           "Insira um telefone válido.";
   
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
       } else if (emailUsuarioVar.includes('@') == false) {
@@ -134,14 +138,25 @@
         mensagem_erro.innerHTML =
           "Insira um email válido.";
   
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
-      } else if (senhaVar.length <= 6 ) {
+      } else if (senhaVar.length <= 8 ) {
         cardErro.style.display = "block";
         // senha_input.style.border = "2px solid red"
         mensagem_erro.innerHTML =
-          "Sua senha deve conter mais que 6 caracteres.";
+          "Sua senha deve conter mais que 8 caracteres.";
   
+        setTimeout(sumirMensagem, 3000);
+        finalizarAguardar();
+        return false;
+      } else if (emailUsuarioVar.includes('@') == false || emailUsuarioVar.includes('.') == false) {
+        cardErro.style.display = "block";
+        // senha_input.style.border = "2px solid red"
+        mensagem_erro.innerHTML =
+          "Sua email deve conter arroba e ponto final.";
+  
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
       } else if (confirmacaoSenhaVar != senhaVar) {
@@ -149,12 +164,13 @@
         // confirmacao_senha_input.style.boder = "2px solid red";
         // senha_input.style.border = "2px solid red";
         mensagem_erro.innerHTML =
-          "As senhas não são compatíveis.";
+          "As senhas não coincidem.";
   
+        setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
       } else {
-        setInterval(sumirMensagem, 5000);
+        setInterval(sumirMensagem, 3000);
       }
 
       // Verificando se o código de ativação é de alguma empresa cadastrada
@@ -165,10 +181,11 @@
           break;
         } else {
           cardErro.style.display = "block";
-          mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+          mensagem_erro.innerHTML = "Código de validação inválido.";
           finalizarAguardar();
         }
       }
+
   
       // Enviando o valor da nova input
       fetch("/usuarios/cadastrar", {
@@ -234,7 +251,11 @@
     }
   
     function sumirMensagem() {
-      cardErro.style.display = "none";
+    console.log("Função sumirMensagem chamada"); // Verificação de execução
+    const cardErro = document.getElementById("cardErro");
+    if (cardErro) {
+        cardErro.style.display = "none";
     }
+}
   </script>
 
