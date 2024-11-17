@@ -24,7 +24,7 @@
                 <img src="assets/gear.png" onclick="mostrarConfig()">
                 <img src="assets/question.png" onclick="mostrarAjuda()">
             </div>
-            <a id="menu-sair" href="../homepage.html"><img src="assets/sign-out.png"></a>
+            <a id="menu-sair" href="../index.html"><img src="assets/sign-out.png"></a>
         </div>
 
     </div>
@@ -81,7 +81,7 @@
         <div id="visaoIndividual">
 
             <div class="input_select_silo">
-                <select id="select_silo" oninput="selecionarSilo()">
+                <select id="select_silo" onclick="selecionarSilo()">
                     <option value="silo1">SILO 1</option>
                     <option value="silo2">SILO 2</option>
                 </select>
@@ -154,20 +154,20 @@
                     </div>
 
                     <div class="grafico-geral" id="grafico-hora">
-                        <canvas id="Silo1_meiaHora"></canvas>
+                        <canvas id="Silo2_meiaHora"></canvas>
                     </div>
 
                 </div>
                 
                 <div class="grafico-longo-prazo">
                     <div class="grafico-geral">
-                        <canvas id="Silo1_Dia"></canvas>
+                        <canvas id="Silo2_Dia"></canvas>
                     </div>
                     <div class="grafico-geral">
-                        <canvas id="Silo1_Semana"></canvas>
+                        <canvas id="Silo2_Semana"></canvas>
                     </div>
                     <div class="grafico-geral">
-                        <canvas id="Silo1_Semestre"></canvas>
+                        <canvas id="Silo2_Semestre"></canvas>
                     </div>
                 </div>
                 
@@ -194,12 +194,57 @@
 
         
         <div id="visaoConfig">
-            aqui sera as configurações
+
+            <div class="inserir-usuario">
+
+                <h3>Adicionar novos usuários</h3>
+                
+                <div class="inserir-usuario-form">
+                    
+                    <label for="codigoAtivacaoUsuario_input">
+                        <p>Codigo ativação*:</p>
+                        <input type="email" id="codigoAtivacaoUsuario_input" class="input" name="iptCodAtvEmpresa">
+                    </label>
+                    
+                    <label for="nome_input">
+                        <p>Nome*: </p>
+                        <input type="text" id="nome_input" name="iptName" class="input">
+                    </label>
+                    
+                    <label for="telUsuario_input">
+                    <p>Telefone Comercial*: </p>
+                    <input type="number" id="telUsuario_input" class="input" name="telComercial">
+                    </label>
+        
+                    <label for="emailUsuario_input">
+                    <p>Email Pessoal*: </p>
+                    <input type="email" id="emailUsuario_input" class="input" name="iptEmail">
+                    </label>
+        
+                    <label for="iptPassword">
+                        <p>Senha*: </p>
+                        <input type="password" id="senha_input" name="iptPassword">
+                    </label>
+                    <label for="ipt_confirmPassword">
+                        <p>Confirme a senha*: </p>
+                        <input type="password" id="confirmaSenha_input" name="ipt_confirmPassword">
+                    </label>
+
+                    <div class="container-button">
+                    <button type="submit" id="button_cadastro" onclick="cadastrarUsuario()" >Cadastrar</button>
+                    </div>
+                
+                </div>
+
+            </div>
+
         </div>
         
 
         <div id="visaoAjuda">
+
             <div id="container-ajuda">
+
                 <div id="validacao">
                     Qual tipo de ajuda está buscando?
                     <button>Cliente</button>
@@ -211,7 +256,9 @@
                     <button onclick="validarChave()">Validar</button>                   
                     <button onclick="voltarValidacao()">voltar</button>
                 </div>
+
             </div>
+
         </div>
         
     </div>
@@ -231,13 +278,29 @@
         document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `Visão Geral`;
     }
+
     function mostrarIndividual() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'flex'
         document.getElementById('visaoConfig').style.display = 'none'
         document.getElementById('visaoAjuda').style.display = 'none';
+        document.getElementById('dashboard-Silo1-ind').style.display = 'block'
         subTitulo.innerHTML = `DashBoard Individual`;
     }
+
+    function selecionarSilo() {
+        var siloSelecionado = select_silo.value;
+        if (siloSelecionado == 'silo1') {
+            divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
+            document.getElementById('dashboard-Silo1-ind').style.display = 'block'
+            document.getElementById('dashboard-Silo2-ind').style.display = 'none'
+        } else if (siloSelecionado == 'silo2') {
+            divMensagem.innerHTML = 'Silo 2 selecionado com sucesso!'
+            document.getElementById('dashboard-Silo1-ind').style.display = 'none'
+            document.getElementById('dashboard-Silo2-ind').style.display = 'block'
+        }
+    }
+
     function mostrarConfig() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'none'
@@ -285,17 +348,6 @@
         document.getElementById('validacao-tec').style.display = 'none';   
     }
 
-    function selecionarSilo() {
-        var siloSelecionado = select_silo.value;
-        if (siloSelecionado == '#') {
-            divMensagem.innerHTML = ``
-        } else if (siloSelecionado == 'silo1') {
-            divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
-        } else if (siloSelecionado == 'silo2') {
-            divMensagem.innerHTML = 'Silo 2 selecionado com sucesso!'
-
-        }
-    }
     //grafico de linha silo 1 
 
     const Silo1_meiaHora = document.getElementById('Silo1_meiaHora');
@@ -543,7 +595,7 @@
 
    const Silo2_meiaHora = document.getElementById('Silo2_meiaHora');
 
-new Chart(Silo2_meiaHora, {
+    new Chart(Silo2_meiaHora, {
     type: 'line',
     data: {
         //aqui devem ir os periodos de tempo (30min em 30min)
@@ -551,7 +603,7 @@ new Chart(Silo2_meiaHora, {
         labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
 
         datasets: [{
-            label: 'Silo 1',
+            label: 'Silo 2',
             //valores que devem vir do sensor
             data: [0.12, 0.19, 0.37, 0.55, 1.27],
             borderWidth: 1
@@ -601,10 +653,9 @@ new Chart(Silo2_meiaHora, {
     }
 });
 
+    const Silo2_Dia = document.getElementById('Silo2_Dia');
 
-const Silo2_Dia = document.getElementById('Silo2_Dia');
-
-new Chart(Silo2_Dia, {
+    new Chart(Silo2_Dia, {
     type: 'bar',
     data: {
         //aqui devem ir os periodos de tempo (diariamente)
@@ -612,7 +663,7 @@ new Chart(Silo2_Dia, {
         labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
 
         datasets: [{
-            label: 'Silo 1',
+            label: 'Silo 2',
             //valores que devem vir do sensor
             data: [0.12, 0.19, 0.37, 0.55, 1.27],
             borderWidth: 1
@@ -662,9 +713,9 @@ new Chart(Silo2_Dia, {
     }
 });
 
-const Silo2_Semana = document.getElementById('Silo2_Semana');
+    const Silo2_Semana = document.getElementById('Silo2_Semana');
 
-new Chart(Silo2_Semana, {
+    new Chart(Silo2_Semana, {
     type: 'bar',
     data: {
         //aqui devem ir os periodos de tempo (Semanalmente)
@@ -672,7 +723,7 @@ new Chart(Silo2_Semana, {
         labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
 
         datasets: [{
-            label: 'Silo 1',
+            label: 'Silo 2',
             //valores que devem vir do sensor
             data: [0.12, 0.19, 0.37, 0.55, 1.27],
             borderWidth: 1
@@ -722,9 +773,9 @@ new Chart(Silo2_Semana, {
     }
 });
 
-const Silo2_Semestre = document.getElementById('Silo2_Semestre');
+    const Silo2_Semestre = document.getElementById('Silo2_Semestre');
 
-new Chart(Silo2_Semestre, {
+    new Chart(Silo2_Semestre, {
     type: 'bar',
     data: {
         //aqui devem ir os periodos de tempo (semestralmente)
@@ -732,7 +783,7 @@ new Chart(Silo2_Semestre, {
         labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
 
         datasets: [{
-            label: 'Silo 1',
+            label: 'Silo 2',
             //valores que devem vir do sensor
             data: [0.12, 0.19, 0.37, 0.55, 1.27],
             borderWidth: 1

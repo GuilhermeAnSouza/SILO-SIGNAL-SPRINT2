@@ -247,6 +247,14 @@ body {
 
 /* Tela individual Silos (aplicável para a tela do Silo 1 e 2) */
 
+#dashboard-Silo1-ind {
+    display: none;
+}
+
+#dashboard-Silo2-ind {
+    display: none;
+}
+
 #visaoIndividual {
     display: none;
     width: 1200px;
@@ -271,6 +279,11 @@ body {
     background-color: #ccdcff;
     border-radius: 10px;
     outline-style: none;
+}
+
+#select_silo:focus {
+    border-color: #FBAF00;
+    border: 2px 0 solid
 }
 
 #divMensagem {
@@ -353,20 +366,83 @@ body {
 
 #visaoConfig {
     display: none;
+    color: white;
+    width: 1200px;
+    height: fit-content;
+}
+
+.inserir-usuario {
+    width: 1200px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.inserir-usuario-form {
+    background-color: #353a50;
+    box-shadow: 0 0 5px #10224b;
+    border-radius: 15px;
+    width: 1200px;
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inserir-usuario-form label {
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.inserir-usuario-form label p {
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-size: 14px;
+}
+
+.inserir-usuario-form input {
+    background-color: #eff4ff;
+    border-radius: 5px;
+    outline-style: none;
+}
+
+.inserir-usuario-form input:focus {
+    border-color: #FBAF00;
+}
+
+.inserir-usuario-form .container-button {
+    margin: 10px;
+}
+
+.inserir-usuario-form button {
+    background-color: #FBAF00;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin: 2px;
 }
 
 /* Tela de suporte */
 
 #visaoAjuda {
     display: none;
+    color: white;
+    width: 88vw;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
 }
 
 #container-ajuda {
-    display: none;
-    flex-direction: column;
+    background-color: #353a50;
+    box-shadow: 0 0 5px #10224b;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 500px;
     height: 300px;
-    background-color: #353a50;
 }
 
 #validacao {
