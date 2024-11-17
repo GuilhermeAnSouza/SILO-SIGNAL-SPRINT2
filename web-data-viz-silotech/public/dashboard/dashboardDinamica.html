@@ -32,6 +32,7 @@
     <div class="container-conteudo">
 
         <div id="container-titulo">Bem-vindo(a), usuário!</div>
+        <!-- Usuário tem que ser dinâmico -->
         
         <div id="subTitulo">Visão Geral</div>
         
@@ -246,15 +247,29 @@
             <div id="container-ajuda">
 
                 <div id="validacao">
-                    Qual tipo de ajuda está buscando?
-                    <button>Cliente</button>
-                    <button onclick="validarTec()">Técnico</button>
+                    <h3>Qual tipo de ajuda está buscando?</h3>
+                    <div class="validacao-opcoes">
+                        <div id="opcao-cliente">
+                            <img id="img-jira" src="assets/jira.jpg">
+                            <p>Cliente</p>
+                        </div>
+                        <!-- Tem que redirecionar pro Jira -->
+                        <div id="opcao-tec" onclick="validarTec()">
+                            <img id="img-bobIA" src="assets/bob espoja.jpeg">
+                            <p>Técnico</p>
+                        </div>
+                    </div>
                 </div>
                 <div id="validacao-tec">
-                    <span>Por favor, insira a chave técnica da empresa</span>
-                    <input type="text" id="iptChave">
-                    <button onclick="validarChave()">Validar</button>                   
-                    <button onclick="voltarValidacao()">voltar</button>
+                    <div id="validacao-tec-form">
+                        <h3>Por favor, insira a chave técnica da empresa</h3>
+                        <input type="text" id="iptChave">
+                        <div id="div_msg_chavetec"></div>
+                    </div>
+                    <div id="validacao-tec-button">
+                        <button id="botao-voltar" onclick="voltarValidacao()">Voltar</button>
+                        <button onclick="validarChave()">Validar</button>                   
+                    </div>
                 </div>
 
             </div>
@@ -338,7 +353,7 @@
         if(validado){
             alert('substitua esse alert pelo link da bobIA')
         } else {
-            alert('chave não valida')
+            div_msg_chavetec.innerHTML = 'Chave Inválida'
         }
 
     }
