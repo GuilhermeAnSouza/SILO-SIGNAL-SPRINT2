@@ -1,5 +1,6 @@
 var usuarioModel = require("../models/usuarioModel");
-// var aquarioModel = require("../models/aquarioModel");
+
+// const { buscarSiloSensoresEmpresa } = require("./dashboardController");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -25,7 +26,7 @@ function autenticar(req, res) {
                             email: resultadoAutenticar[0].email,
                             empresaId: resultadoAutenticar[0].empresaId
                         })
-                        // aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
+                        // dashboardModel.buscarSiloSensoresEmpresa(resultadoAutenticar[0].empresaId)
                         //     .then((resultadoAquarios) => {
                         //         if (resultadoAquarios.length > 0) {
                         //             res.json({
@@ -33,7 +34,7 @@ function autenticar(req, res) {
                         //                 email: resultadoAutenticar[0].email,
                         //                 nome: resultadoAutenticar[0].nome,
                         //                 senha: resultadoAutenticar[0].senha,
-                        //                 aquarios: resultadoAquarios
+                        //                 silo: resultadoAutenticar[0].silo
                         //             });
                         //         } else {
                         //             res.status(204).json({ aquarios: [] });
@@ -98,5 +99,6 @@ function cadastrar(req, res) {
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    // buscarSiloSensoresEmpresa
 }

@@ -67,4 +67,6 @@ CREATE TABLE sensor (
     constraint chkFuncionamentoSensor check(statusFuncionamento in ('Ativo', 'Inativo'))
 );
 
+SELECT * FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = 1;
+
 -- drop database silosignal;
