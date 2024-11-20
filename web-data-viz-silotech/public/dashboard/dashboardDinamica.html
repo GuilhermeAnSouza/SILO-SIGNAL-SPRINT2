@@ -22,7 +22,6 @@
                 <img src="assets/house.png" onclick="mostrarGeral()">
                 <img src="assets/chart-line.png" onclick="mostrarIndividual()">
                 <img src="assets/gear.png" onclick="mostrarConfig()">
-                <img src="assets/question.png" onclick="mostrarAjuda()">
             </div>
             <a id="menu-sair" href="../index.html"><img src="assets/sign-out.png"></a>
         </div>
@@ -35,6 +34,8 @@
         <!-- Usuário tem que ser dinâmico -->
         
         <div id="subTitulo">Visão Geral</div>
+
+        <script data-jsd-embedded data-key="2d0b87df-7d61-4e46-ab2b-d49f73d8cc5f" data-base-url="https://jsd-widget.atlassian.com" src="https://jsd-widget.atlassian.com/assets/embed.js"></script>
         
         <div id="visaoGeral">
 
@@ -241,32 +242,6 @@
 
         </div>
         
-
-        <div id="visaoAjuda">
-
-            <div id="container-ajuda">
-
-                <div id="validacao">
-                    <h3>Qual tipo de ajuda está buscando?</h3>
-                    <div class="validacao-opcoes">
-                        <script data-jsd-embedded data-key="2d0b87df-7d61-4e46-ab2b-d49f73d8cc5f" data-base-url="https://jsd-widget.atlassian.com" src="https://jsd-widget.atlassian.com/assets/embed.js"></script>
-                    </div>
-                </div>
-                <div id="validacao-tec">
-                    <div id="validacao-tec-form">
-                        <h3>Por favor, insira a chave técnica da empresa</h3>
-                        <input type="text" id="iptChave">
-                        <div id="div_msg_chavetec"></div>
-                    </div>
-                    <div id="validacao-tec-button">
-                        <button id="botao-voltar" onclick="voltarValidacao()">Voltar</button>
-                        <button onclick="validarChave()">Validar</button>                   
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
         
     </div>
 
@@ -319,45 +294,6 @@
         document.getElementById('visaoConfig').style.display = 'flex'
         document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `Configurações`;
-    }
-
-    function mostrarAjuda() {
-        document.getElementById('visaoGeral').style.display = 'none';
-        document.getElementById('visaoIndividual').style.display = 'none';
-        document.getElementById('visaoConfig').style.display = 'none';
-        document.getElementById('visaoAjuda').style.display = 'flex';
-        subTitulo.innerHTML = `sessao de ajuda titulo`;
-        document.getElementById('container-ajuda').style.display = 'flex';
-    }
-
-    function validarTec(){
-        document.getElementById('validacao').style.display = 'none';
-        document.getElementById('validacao-tec').style.display = 'flex';
-    }
-
-    var chaveTeste = '123oi';
-    
-    function validarChave(){
-        var chave = iptChave.value;
-        var validado = false;
-
-        if (chave == chaveTeste){
-            validado = true;
-        } else {
-            validado = false
-        }
-
-        if(validado){
-            alert('substitua esse alert pelo link da bobIA')
-        } else {
-            div_msg_chavetec.innerHTML = 'Chave Inválida'
-        }
-
-    }
-
-    function voltarValidacao(){
-        document.getElementById('validacao').style.display = 'flex';
-        document.getElementById('validacao-tec').style.display = 'none';   
     }
 
     //grafico de linha silo 1 
