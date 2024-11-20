@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/index.js"></script>
     <title>Fale conosco</title>
     <link rel="icon" href="./assets/img/favicon.png" type="image/png">
 </head>
@@ -42,30 +41,32 @@
             <p>Ficaremos muito contentes em responder suas dúvidas!</p>
 
             <div class="formularioFc">
-                <label>
-                    <p>Nome: </p>
-                    <input type="text" id="iptName" name="iptName" class="inputNomeEmail" oninput="validarNome()">
-                </label>
-    
-                <label>
-                    <p>Email: </p>
-                    <input type="email" id="iptEmail" class="inputNomeEmail" name="iptEmail" oninput="validarEmail()">
-                </label>
-    
-                <label>
-                    <p>Mensagem: </p>
-                    <input type="email" id="iptEmail" class="inputMensagem" name="iptEmail" oninput="validarEmail()">
-                </label>
+                <form action="https://formsubmit.co/silo.technology@outlook.com" method="POST">
+                        
+                            <p>Nome: </p>
+                            <input type="text" id="iptName" name="name" class="inputNomeEmail">
+                            
+                            
+                        
+                            <p>Email: </p>
+                            <input type="email" id="iptEmail" class="inputNomeEmail" name="email">
+                        
+            
+                        
+                            <p>Mensagem: </p>
+                            <input type="area" id="iptEmail" class="inputMensagem" name="message">
+                    
+                    <button type="submit" class="buttonFc">Enviar</button>
+                </form>
             </div>
 
-            <button class="buttonFc">Enviar</button>
+            
 
         </div>
 
-
-
-
-
+        <a class="bob-ia-logo" href="BobIA/public/index.html">
+           <img src="assets/img/bob_ia.png" alt=""> 
+        </a>
 
     </div>
 

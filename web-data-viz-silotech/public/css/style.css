@@ -677,12 +677,28 @@ body.cadastro_page .navbar {
     background-position: center;
     background-attachment: fixed;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: #2F3A4E;
     border: 1px solid black;
     width: 100%;
-    height: 854px;
+    height: fit-content;
 }
+
+.container-faleC .bob-ia-logo {
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    width: auto;
+    height: auto;
+}
+
+.container-faleC .bob-ia-logo img {
+    width: 72px;
+    height: 72px;
+}
+
 
 .conteudo-faleC {
     display: flex;
