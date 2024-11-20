@@ -30,7 +30,7 @@
 
     <div class="container-conteudo">
 
-        <div id="container-titulo">Bem-vindo(a), usuário!</div>
+        <div id="container-titulo">Bem-vindo(a), <span id="b_usuario">usuário</span>!</div>
         <!-- Usuário tem que ser dinâmico -->
         
         <div id="subTitulo">Visão Geral</div>
@@ -251,6 +251,11 @@
 </html>
 
 <script>
+    
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+
+
     document.getElementById('visaoGeral').style.display = 'flex';
     //funcoes para aparecer e desaparecer cada div
     function mostrarGeral() {
