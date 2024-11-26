@@ -139,6 +139,14 @@ button:hover {
     margin-bottom: 70px;
 }
 
+/* Container das inputs de informação do silo */
+.inputContainer {
+    background-color: #d0dbf0;
+    border-color: 1px solid #FBAF00;
+    border-radius: 10px;
+    padding: 20px;
+}
+
 
 .footer {
     margin-top: 70px;

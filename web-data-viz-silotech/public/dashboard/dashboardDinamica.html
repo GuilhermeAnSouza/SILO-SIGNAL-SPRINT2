@@ -193,8 +193,24 @@
 
 
         </div>
+    
+        <div id="validar_config" class="validar-config">
+            <div class="container-validar-config">
+                <div class="conteudo-validar-config">
+                    <div class="titulo-validar-config">
+                        <h3>
+                            Digite o código de ativação da sua empresa para acessar as configurações
+                        </h3>
+                    </div>
+                    <div class="form-validar-config">
+                        <input type="text" id="codigoValidarConfig_input">
+                        <button onclick="validar_codigo()">Validar código</button>
+                        <div id="erro_validar_config"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        
         <div id="visaoConfig">
 
             <div class="inserir-usuario">
@@ -204,7 +220,7 @@
                 <div class="inserir-usuario-form">
                     
                     <label for="codigoAtivacaoUsuario_input">
-                        <p>Codigo ativação*:</p>
+                        <p>Código ativação*:</p>
                         <input type="email" id="codigoAtivacaoUsuario_input" class="input" name="iptCodAtvEmpresa">
                     </label>
                     
@@ -240,6 +256,16 @@
 
             </div>
 
+            <div class="mostrar-usuario">
+                <div class="container-mostrar-usuario">
+                    <div class="titulo-usuarios-inseridos">
+                        <h3>Usuários Adicionados</h3>
+                    </div>
+                    <div id="usuarios_inseridos" class="usuarios-inseridos">
+                    </div>
+                </div>
+            </div>
+
         </div>
         
         
@@ -254,23 +280,21 @@
     
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-
-
     document.getElementById('visaoGeral').style.display = 'flex';
     //funcoes para aparecer e desaparecer cada div
     function mostrarGeral() {
         document.getElementById('visaoGeral').style.display = 'flex';
         document.getElementById('visaoIndividual').style.display = 'none';
+        document.getElementById('validar_config').style.display = 'none'
         document.getElementById('visaoConfig').style.display = 'none';
-        document.getElementById('visaoAjuda').style.display = 'none';
         subTitulo.innerHTML = `Visão Geral`;
     }
 
     function mostrarIndividual() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'flex'
+        document.getElementById('validar_config').style.display = 'none'
         document.getElementById('visaoConfig').style.display = 'none'
-        document.getElementById('visaoAjuda').style.display = 'none';
         document.getElementById('dashboard-Silo1-ind').style.display = 'block'
         subTitulo.innerHTML = `DashBoard Individual`;
     }
@@ -291,9 +315,52 @@
     function mostrarConfig() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'none'
-        document.getElementById('visaoConfig').style.display = 'flex'
-        document.getElementById('visaoAjuda').style.display = 'none';
+        document.getElementById('validar_config').style.display = 'flex'
+        document.getElementById('visaoConfig').style.display = 'none'
         subTitulo.innerHTML = `Configurações`;
+
+    }
+
+    function validar_codigo() {
+        var codigoVar = codigoValidarConfig_input.value;
+
+        var codigo_validacao = 123
+
+        if (codigoVar == codigo_validacao) {
+            document.getElementById('visaoGeral').style.display = 'none'
+            document.getElementById('visaoIndividual').style.display = 'none'
+            document.getElementById('validar_config').style.display = 'none'
+            document.getElementById('visaoConfig').style.display = 'flex'
+            subTitulo.innerHTML = `Configurações`;
+        } else {
+            erro_validar_config.innerHTML = `Acesso negado. Código inválido`
+        }
+    }
+    
+    function cadastrarUsuario() {
+        var nomeVar = nome_input.value;
+        var telUsuarioVar = telUsuario_input.value;
+        var emailUsuarioVar = emailUsuario_input.value;
+        var senhaVar = senha_input.value;
+        var confirmacaoSenhaVar = confirmaSenha_input.value;
+        var codigoVar = codigoAtivacaoUsuario_input.value;
+
+        if (
+            nomeVar == "" ||
+            telUsuarioVar == "" ||
+            emailUsuarioVar == "" ||
+            senhaVar == "" ||
+            confirmacaoSenhaVar == "" ||
+            codigoVar == "" 
+        ) {
+            alert("Preencha todos os campos!")
+        } else {
+            usuarios_inseridos.innerHTML += `<p>
+                            Nome: ${nomeVar} | 
+                            Email Pessoal: ${emailUsuarioVar} | 
+                            Telefone Comercial: ${telUsuarioVar} | 
+                            </p>`
+        }
     }
 
     //grafico de linha silo 1 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Fale conosco</title>
+    <title>Login Suporte</title>
     <link rel="icon" href="./assets/img/favicon.png" type="image/png">
 </head>
 <body>
@@ -33,42 +33,41 @@
         </div>
     </div>
 
-    <div class="container-faleC">
-        <div class="conteudo-faleC">
-
-            <h1>Fale conosco</h1>
-
-            <p>Ficaremos muito contentes em responder suas dúvidas!</p>
-
-            <div class="formularioFc">
-                <form action="https://formsubmit.co/silo.technology@outlook.com" method="POST">
-                        
-                            <p>Nome: </p>
-                            <input type="text" id="iptName" name="name" class="inputNomeEmail">
-                            
-                            
-                        
-                            <p>Email: </p>
-                            <input type="email" id="iptEmail" class="inputNomeEmail" name="email">
-                        
-            
-                        
-                            <p>Mensagem: </p>
-                            <input type="area" id="iptEmail" class="inputMensagem" name="message">
-                    
-                    <button type="submit" class="buttonFc">Enviar</button>
-                </form>
-            </div>
-
-            
-
+    <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
         </div>
-
-        <a class="bob-ia-logo" href="loginSuporte.html">
-           <img src="assets/img/bob_ia.png" alt=""> 
-        </a>
-
     </div>
+        <main class="conteudo">
+            <div class="containerLogin">
+                <div class="formLogin">
+                    <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                    <span class="tittleLog">Login Suporte</span>
+                    <label for="userEmail">Email:</label>
+                    <input class="input" type="text" id="email_input" name="userEmail" oninput="validarEmailLogin()">
+
+                    <label for="iptUserPassword">Senha:</label>
+                    <input class="input" type="password" id="senha_input" name="password"
+                        oninput="validarPasswordLogin()">
+
+                    <div id="divErrorLogin"></div>
+
+                    <div class="container-button">
+                        <!-- <button type="submit" id="button_login" onclick="entrar()">Login</button> -->
+                        <button id="button_login" onclick="entrarSuporte()">Login</button>
+                    </div>
+                    <span class="span_center">Não tem uma conta? <a href="cadastroEmpresa.html"> Cadastre-se!</a></span>
+
+                    <div id="div_aguardar" class="loading-div">
+                        <!-- <img src="./assets/circle-loading.gif" id="loading-gif"> -->
+                    </div>
+
+                    <div id="div_erros_login"></div>
+
+                </div>
+            </div>
+        </main>
+
 
     <div class="footer">
         <div class="container">
@@ -87,3 +86,4 @@
     </div>
 </body>
 </html>
+

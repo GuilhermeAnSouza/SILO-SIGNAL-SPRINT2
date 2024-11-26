@@ -398,7 +398,7 @@ main.conteudo {
     background-size: cover; 
     background-position: center;
     background-attachment: fixed; 
-    width: 100vw;
+    width: 98.9vw;
     height: 100wh;
     background-color: #8AA032;
     display: flex;
@@ -688,7 +688,7 @@ body.cadastro_page .navbar {
 
 .container-faleC .bob-ia-logo {
     position: fixed;
-    right: 20px;
+    right: 30px;
     bottom: 30px;
     width: auto;
     height: auto;
