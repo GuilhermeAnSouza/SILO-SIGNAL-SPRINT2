@@ -57,6 +57,13 @@ function autenticar(req, res) {
 
 }
 
+function listarUsuario(req, res) {
+    var fkEmpresa = req.params.fkEmpresa;
+    usuarioModel.listarUsuario(fkEmpresa).then((resultado) => {
+      res.status(200).json(resultado);
+    });
+}
+
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
@@ -100,5 +107,6 @@ function cadastrar(req, res) {
 module.exports = {
     autenticar,
     cadastrar,
+    listarUsuario
     // buscarSiloSensoresEmpresa
 }
