@@ -55,6 +55,8 @@ create table silo(
         REFERENCES empresa (idEmpresa),
 	constraint chkFuncionamento check(statusFuncionamento in ('Ativo', 'Inativo'))
 );
+insert into silo values 
+(default, 'Ativo', 3000, 2800, '2024-02-02', 1);
 
 CREATE TABLE sensor (
     idSensor INT PRIMARY KEY AUTO_INCREMENT,
@@ -66,7 +68,10 @@ CREATE TABLE sensor (
     fk_silo INT,
     constraint chkFuncionamentoSensor check(statusFuncionamento in ('Ativo', 'Inativo'))
 );
+insert into sensor values 
+(default, '2024-01-01', 2.54, default, 'Ativo', 'Verde', 1);
 
-SELECT * FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = 1;
+SELECT * FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = 1 AND fk_silo = 1;
+
 
 -- drop database silosignal;
