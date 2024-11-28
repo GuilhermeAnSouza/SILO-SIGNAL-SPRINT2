@@ -21,49 +21,47 @@
             </div>
         </div>
         <div class="containerCadastro" id="conteudoEmpresa" style="display: flex;">
-            <form class="formCadastro">
-                <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
-                <span class="tittleLog tituloCadastro">Cadastre Sua Empresa</span>
-                <div id="cadastroEmpresa">
-                    <!-- <p class="subTittle"><span>Empresa</span></p> -->
-
-                    <label for="nameEmpresa">
-                        <p>Razão Social*: </p>
-                        <input type="text" id="razaoSocial_input" class="input" name="nameEmpresa">
-                    </label>
-
-                    <div class="subcontainer">
-                        <label for="iptCNPJ">
-                            <p>CNPJ*:</p>
-                            <input type="number" id="cnpj_input" name="iptCNPJ">
+            <!-- <form class="formCadastro"> -->
+                <div class="formCadastro">
+                    <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                    <span class="tittleLog tituloCadastro">Cadastre Sua Empresa</span>
+                    <div id="cadastroEmpresa">
+                        <!-- <p class="subTittle"><span>Empresa</span></p> -->
+    
+                        <label for="nameEmpresa">
+                            <p>Razão Social*: </p>
+                            <input type="text" id="razaoSocial_input" class="input" name="nameEmpresa">
                         </label>
-
-                        <label for="iptTel">
-                            <p>Telefone:</p>
-                            <input type="number" id="telEmp_input" name="iptTel">
+    
+                        <div class="subcontainer">
+                            <label for="iptCNPJ">
+                                <p>CNPJ*:</p>
+                                <input type="number" id="cnpj_input" name="iptCNPJ">
+                            </label>
+    
+                            <label for="iptTel">
+                                <p>Telefone:</p>
+                                <input type="number" id="telEmp_input" name="iptTel">
+                            </label>
+                        </div>
+    
+                        <label for="iptEmailEmpresa">
+                            <p>Email Corporativo*:</p>
+                            <input type="email" id="emailEmpresa_input" class="input" name="iptEmailEmpresa">
+                        </label>
+                        <label for="iptCodAtvEmpresa">
+                            <p>Codigo ativação:</p>
+                            <input type="text" id="codigoAtivacao_input" class="input" name="iptCodAtvEmpresa">
                         </label>
                     </div>
-
-                    <label for="iptEmailEmpresa">
-                        <p>Email Corporativo*:</p>
-                        <input type="email" id="emailEmpresa_input" class="input" name="iptEmailEmpresa">
-                    </label>
-                    <label for="iptCodAtvEmpresa">
-                        <p>Codigo ativação:</p>
-                        <input type="email" id="codigoAtivacao_input" class="input" name="iptCodAtvEmpresa">
-                    </label>
-                    <label for="iptCodTecEmpresa">
-                        <p>Codigo Técnico:</p>
-                        <input type="email" id="codigoTecnico_input" class="input" name="iptCodTecEmpresa">
-                    </label>
+                    <!-- <div id="divError"></div> -->
+                    <div class="container-button">
+                        <button  id="button_cadastro" onclick="cadastrarEmpresa()">Cadastrar Empresa</button></a>
+    
+                    </div>
+                    <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
                 </div>
-                <!-- <div id="divError"></div> -->
-                <div class="container-button">
-                    <button type="submit" id="button_cadastro" onclick="cadastrarEmpresa()">Cadastrar Empresa</button></a>
-
-                </div>
-                <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
-            </form>
+            <!-- </form> -->
             <!-- <p>Já tem uma conta? <a href="login.html">Login</a></p> -->
             <div id="div_aguardar" class="loading-div">
                 <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
@@ -94,7 +92,6 @@
         var telEmpVar = telEmp_input.value;
         var emailEmpVar = emailEmpresa_input.value;
         var codigoAtivacaoVar = codigoAtivacao_input.value;
-        var codigoTecnicoVar = codigoTecnico_input.value;
         // var idEmpresaVincular
 
         // Verificando se há algum campo em branco
@@ -103,8 +100,7 @@
             cnpjVar == "" ||
             telEmpVar == "" ||
             emailEmpVar == "" ||
-            codigoAtivacaoVar == "" ||
-            codigoTecnicoVar == ""
+            codigoAtivacaoVar == ""
         ) {
             cardErro.style.display = "block";
             mensagem_erro.innerHTML =
@@ -158,17 +154,7 @@
             setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else if (codigoTecnicoVar.length < 6 && codigoTecnicoVar.length > 6) {
-            cardErro.style.display = "block";
-            // senha_input.style.border = "2px solid red"
-            mensagem_erro.innerHTML =
-                "Seu código do técnico deve conter 6 caracteres.";
-
-            setTimeout(sumirMensagem, 3000);
-            finalizarAguardar();
-            return false;
         }
-
 
         // Verificando se o código de ativação já existe
         // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
@@ -197,7 +183,6 @@
                 telEmpServer: telEmpVar,
                 emailEmpServer: emailEmpVar,
                 codigoAtivacaoServer: codigoAtivacaoVar,
-                codigoTecnicoServer: codigoTecnicoVar
             }),
         })
             .then(function (resposta) {
@@ -216,16 +201,16 @@
                     limparFormulario();
                     finalizarAguardar();
                 } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
+                    // resposta.json().then((j) => {
+                    //     mensagem_erro.innerHTML = j.mensagem;
+                    // })
+                    // throw s"Houve um erro ao tentar realizar o cadastro!";
                 }
             })
             .catch(function (resposta) {
                 console.log(`#ERRO: ${resposta}`);
                 finalizarAguardar();
             });
-
-        return false;
-
 
         // aqui trava e redireciona para o cadastro do usuario
         // window.location.href = event.currentTarget.getAttribute('href');

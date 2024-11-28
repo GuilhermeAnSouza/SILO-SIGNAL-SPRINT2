@@ -9,7 +9,6 @@ CREATE TABLE empresa (
     telEmp CHAR(11),
     emailEmp VARCHAR(45),
     codigoAtivacao varchar(50) unique,
-    codigoTecnico char(6) unique,
     fk_responsavel INT
 );
 

@@ -20,9 +20,9 @@ router.get("/listar", function (req, res) {
   empresaController.listar(req, res);
 });
 
-router.get("/buscar/:codigoTecnico", function (req, res) {
-  empresaController.buscarPorCodigoTecnico(req, res);
-});
+// router.get("/buscar/:codigoTecnico", function (req, res) {
+//   empresaController.buscarPorCodigoTecnico(req, res);
+// });
 
 
 module.exports = router;
