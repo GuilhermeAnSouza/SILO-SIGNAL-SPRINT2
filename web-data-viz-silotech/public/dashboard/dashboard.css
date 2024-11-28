@@ -143,11 +143,27 @@ body {
     color: white;
 }
 
-#statusSilo1 {
+#statusSilo1_ok {
     display: flex;
     height: 40px;
     width: 40px;
     background-color: #00e000;
+    border-radius: 20px;
+}
+
+#statusSilo1_atencao {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    background-color: #ffee00;
+    border-radius: 20px;
+}
+
+#statusSilo1_alerta {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    background-color: #e00000;
     border-radius: 20px;
 }
 
