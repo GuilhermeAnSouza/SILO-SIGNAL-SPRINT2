@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    
+
     <script src="./js/sessao.js"></script>
 
     <link rel="icon" href="./assets/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./css/style.css">
-    
+
 </head>
 
 <body class="cadastro_page" onload="listar()">
@@ -22,52 +22,52 @@
         </div>
         <div class="containerCadastro" id="conteudoEmpresa" style="display: flex;">
             <!-- <form class="formCadastro"> -->
-                <div class="formCadastro">
-                    <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
-                    <span class="tittleLog tituloCadastro">Cadastre Sua Empresa</span>
-                    <div id="cadastroEmpresa">
-                        <!-- <p class="subTittle"><span>Empresa</span></p> -->
-    
-                        <label for="nameEmpresa">
-                            <p>Razão Social*: </p>
-                            <input type="text" id="razaoSocial_input" class="input" name="nameEmpresa">
+            <div class="formCadastro">
+                <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
+                <span class="tittleLog tituloCadastro">Cadastre Sua Empresa</span>
+                <div id="cadastroEmpresa">
+                    <!-- <p class="subTittle"><span>Empresa</span></p> -->
+
+                    <label for="nameEmpresa">
+                        <p>Razão Social*: </p>
+                        <input type="text" id="razaoSocial_input" class="input" name="nameEmpresa">
+                    </label>
+
+                    <div class="subcontainer">
+                        <label for="iptCNPJ">
+                            <p>CNPJ*:</p>
+                            <input type="number" id="cnpj_input" name="iptCNPJ">
                         </label>
-    
-                        <div class="subcontainer">
-                            <label for="iptCNPJ">
-                                <p>CNPJ*:</p>
-                                <input type="number" id="cnpj_input" name="iptCNPJ">
-                            </label>
-    
-                            <label for="iptTel">
-                                <p>Telefone:</p>
-                                <input type="number" id="telEmp_input" name="iptTel">
-                            </label>
-                        </div>
-    
-                        <label for="iptEmailEmpresa">
-                            <p>Email Corporativo*:</p>
-                            <input type="email" id="emailEmpresa_input" class="input" name="iptEmailEmpresa">
-                        </label>
-                        <label for="iptCodAtvEmpresa">
-                            <p>Codigo ativação:</p>
-                            <input type="text" id="codigoAtivacao_input" class="input" name="iptCodAtvEmpresa">
+
+                        <label for="iptTel">
+                            <p>Telefone:</p>
+                            <input type="number" id="telEmp_input" name="iptTel">
                         </label>
                     </div>
-                    <!-- <div id="divError"></div> -->
-                    <div class="container-button">
-                        <button  id="button_cadastro" onclick="cadastrarEmpresa()">Cadastrar Empresa</button></a>
-    
-                    </div>
-                    <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
+
+                    <label for="iptEmailEmpresa">
+                        <p>Email Corporativo*:</p>
+                        <input type="email" id="emailEmpresa_input" class="input" name="iptEmailEmpresa">
+                    </label>
+                    <label for="iptCodAtvEmpresa">
+                        <p>Codigo ativação:</p>
+                        <input type="text" id="codigoAtivacao_input" class="input" name="iptCodAtvEmpresa">
+                    </label>
                 </div>
+                <!-- <div id="divError"></div> -->
+                <div class="container-button">
+                    <button id="button_cadastro" onclick="cadastrarEmpresa()">Cadastrar Empresa</button></a>
+
+                </div>
+                <span class="span_center">Já tem uma conta? <a href="login.html"> Login</a></span>
+            </div>
             <!-- </form> -->
             <!-- <p>Já tem uma conta? <a href="login.html">Login</a></p> -->
             <div id="div_aguardar" class="loading-div">
                 <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
-              </div>
-      
-              <div id="div_erros_login"></div>
+            </div>
+
+            <div id="div_erros_login"></div>
         </div>
     </main>
 
@@ -105,7 +105,7 @@
             cardErro.style.display = "block";
             mensagem_erro.innerHTML =
                 "Preencha todos os campos.";
-            
+
             setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
@@ -136,7 +136,7 @@
             setTimeout(sumirMensagem, 3000);
             finalizarAguardar();
             return false;
-        } else if (emailEmpVar.includes('@') == false || emailEmpVar.includes('.') == false ) {
+        } else if (emailEmpVar.includes('@') == false || emailEmpVar.includes('.') == false) {
             cardErro.style.display = "block";
             // email_input.style.border = "2px solid red"
             mensagem_erro.innerHTML =
@@ -198,17 +198,22 @@
                         window.location = "cadastroUsuario.html";
                     }, "2000");
 
-                    limparFormulario();
+                    // limparFormulario();
                     finalizarAguardar();
                 } else {
                     // resposta.json().then((j) => {
                     //     mensagem_erro.innerHTML = j.mensagem;
                     // })
-                    // throw s"Houve um erro ao tentar realizar o cadastro!";
+                    throw "CNPJ já cadastrado.";
                 }
             })
             .catch(function (resposta) {
+                cardErro.style.display = "block";
+
+                mensagem_erro.innerHTML = resposta;
                 console.log(`#ERRO: ${resposta}`);
+
+                setTimeout(sumirMensagem, 3000);
                 finalizarAguardar();
             });
 
@@ -237,12 +242,12 @@
     }
 
     function sumirMensagem() {
-    console.log("Função sumirMensagem chamada"); // Verificação de execução
-    const cardErro = document.getElementById("cardErro");
-    if (cardErro) {
-        cardErro.style.display = "none";
+        console.log("Função sumirMensagem chamada"); // Verificação de execução
+        const cardErro = document.getElementById("cardErro");
+        if (cardErro) {
+            cardErro.style.display = "none";
+        }
     }
-}
 
 
 </script>
