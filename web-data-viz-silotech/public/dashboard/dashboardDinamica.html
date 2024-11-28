@@ -10,7 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarUsuario()">
+<body onload="
+listarUsuario(), 
+kpis_silo1(),
+kpis_silo2()">
 
     <div class="conteudo-geral">
 
@@ -45,9 +48,9 @@
                     <div class="kpi1">
                         <p>STATUS ATUAL</p>
                         <p class="nome-silo">SILO 1</p>
-                        <div class="porcentagem-silo">
-                            <div id="statusSilo1"></div>
-                            <span id="silo1_porcentagem">1.56%</span>
+                        <div id="porcentagem_silo1_geral" class="porcentagem-silo">
+                            <!-- <div id="statusSilo1"></div>
+                            <span id="silo1_porcentagem">1.56%</span> -->
                             <!-- esse dado precisa ser dinamico -->
                         </div>
                     </div>
@@ -55,9 +58,9 @@
                     <div class="kpi2">
                         <p>STATUS ATUAL</p>
                         <p class="nome-silo">SILO 2</p>
-                        <div class="porcentagem-silo">
-                            <div id="statusSilo2"></div>
-                            <span id="silo2_porcentagem">2.89%</span>
+                        <div id="porcentagem_silo2_geral" class="porcentagem-silo">
+                            <!-- <div id="statusSilo2"></div>
+                            <span id="silo2_porcentagem">2.89%</span> -->
                             <!-- esse dado precisa ser dinamico -->
                         </div>
                     </div>
@@ -101,9 +104,9 @@
                             <div class="kpi1">
                                 <p>STATUS ATUAL</p>
                                 <p class="nome-silo">SILO 1</p>
-                                <div class="porcentagem-silo">
-                                    <div id="statusSilo1"></div>
-                                    <span id="silo1_porcentagem">2.89%</span> <!--esse dado precisa ser dinamico-->
+                                <div id="porcentagem_silo1_ind" class="porcentagem-silo">
+                                    <!-- <div id="statusSilo1"></div> -->
+                                    <!-- <span id="silo1_porcentagem">2.89%</span> esse dado precisa ser dinamico -->
                                 </div>
                             </div>
 
@@ -144,9 +147,9 @@
                             <div class="kpi2">
                                 <p>STATUS ATUAL</p>
                                 <p class="nome-silo">SILO 2</p>
-                                <div class="porcentagem-silo">
-                                    <div id="statusSilo2"></div>
-                                    <span id="silo2_porcentagem">2.89%</span> <!--esse dado precisa ser dinamico-->
+                                <div id="porcentagem_silo2_ind" class="porcentagem-silo">
+                                    <!-- <div id="statusSilo2"></div>
+                                    <span id="silo2_porcentagem">2.89%</span> esse dado precisa ser dinamico -->
                                 </div>
                             </div>
 
@@ -339,6 +342,112 @@
         }
     }
 
+    // funções kpis
+
+    function kpis_silo1() {
+        var idEmpresa = sessionStorage.FK_EMPRESA;
+        var idSilo = 1
+
+        fetch(`/dashboard/kpis_silo1/${idEmpresa}/${idSilo}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var conteudo = document.getElementById("porcentagem_silo1_ind");
+                    var mensagem = document.createElement("span");
+                    mensagem.innerHTML = "Nenhum resultado encontrado."
+                    conteudo.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado.";
+                }
+
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    var conteudo = document.getElementById("porcentagem_silo1_ind");
+                    conteudo.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var lista = resposta[i];
+
+                        // silo 1 individual
+
+                        if (lista.porcentagemDetec < 4) {
+                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
+                        } else if (lista.porcentagemDetec < 9) {
+                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_atencao"></div>`
+                        } else if (lista.porcentagemDetec < 15) {
+                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                        }
+
+                        // silo 2 individual
+
+                        porcentagem_silo1_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+
+                        if (lista.porcentagemDetec < 4) {
+                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
+                        } else if (lista.porcentagemDetec < 9) {
+                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_atencao"></div>`
+                        } else if (lista.porcentagemDetec < 15) {
+                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                        }
+
+                        porcentagem_silo1_geral.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+                    }
+                })
+            }
+        })
+
+    }
+
+    function kpis_silo2() {
+        var idEmpresa = sessionStorage.FK_EMPRESA;
+        var idSilo = 2
+
+        fetch(`/dashboard/kpis_silo2/${idEmpresa}/${idSilo}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var conteudo = document.getElementById("porcentagem_silo2_ind");
+                    var mensagem = document.createElement("span");
+                    mensagem.innerHTML = "Nenhum resultado encontrado."
+                    conteudo.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado.";
+                }
+
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    var conteudo = document.getElementById("porcentagem_silo2_ind");
+                    conteudo.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var lista = resposta[i];
+
+                        // silo 1 individual
+
+                        if (lista.porcentagemDetec < 4) {
+                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
+                        } else if (lista.porcentagemDetec < 9) {
+                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_atencao"></div>`
+                        } else if (lista.porcentagemDetec < 15) {
+                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                        }
+
+                        // silo 2 individual
+
+                        porcentagem_silo2_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+
+                        if (lista.porcentagemDetec < 4) {
+                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
+                        } else if (lista.porcentagemDetec < 9) {
+                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_atencao"></div>`
+                        } else if (lista.porcentagemDetec < 15) {
+                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                        }
+
+                        porcentagem_silo2_geral.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+                    }
+                })
+            }
+        })
+
+    }
+
     function cadastrarUsuario() {
         var nomeVar = nome_input.value;
         var telUsuarioVar = telUsuario_input.value;
@@ -402,8 +511,8 @@
         )
     }
 
-    //FUNCOES PARA PEGAR OS DADOS E ATUALIZAR O GRAFICO  
-    function obterDadosGrafico(empresaId) {
+    // FUNCOES PARA PEGAR OS DADOS E ATUALIZAR O GRAFICO  
+    function obterDadosGrafico(idSilo) {
 
         // alterarTitulo(idAquario)
 
@@ -411,13 +520,13 @@
             clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`//dashboard/buscarSiloSensoresEmpresa/${empresaId}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/dashboard/${idSilo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
 
-                    plotarGrafico(resposta, empresaId);
+                    plotarGrafico(resposta, idSilo);
 
                 });
             } else {
@@ -440,19 +549,13 @@
         let dados = {
             labels: labels,
             datasets: [{
-                label: 'Umidade',
+                label: 'gás',
                 data: [],
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1
-            },
-            {
-                label: 'Temperatura',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(199, 52, 52)',
-                tension: 0.1
-            }]
+            }],
+            
         };
 
         console.log('----------------------------------------------')
@@ -463,8 +566,7 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
             labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.umidade);
-            dados.datasets[1].data.push(registro.temperatura);
+            dados.datasets.data.push(registro.umidade);
         }
 
         console.log('----------------------------------------------')
@@ -489,7 +591,61 @@
 
         setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
     }
+    
+    function atualizarGrafico(idAquario, dados, myChart) {
 
+
+
+fetch(`/dashboard/buscarSiloSensoresEmpresa/${idSilo}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (novoRegistro) {
+
+            obterdados(idSilo);
+            // alertar(novoRegistro, idAquario);
+            console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+            console.log(`Dados atuais do gráfico:`);
+            console.log(dados);
+
+            // let avisoCaptura = document.getElementById(`avisoCaptura${idAquario}`)
+            // avisoCaptura.innerHTML = ""
+
+
+            if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
+                console.log("---------------------------------------------------------------")
+                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
+                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
+                console.log("Horário do novo dado capturado:")
+                console.log(novoRegistro[0].momento_grafico)
+                console.log("Horário do último dado capturado:")
+                console.log(dados.labels[dados.labels.length - 1])
+                console.log("---------------------------------------------------------------")
+            } else {
+                // tirando e colocando valores no gráfico
+                dados.labels.shift(); // apagar o primeiro
+                dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
+
+                dados.datasets[0].data.shift();  // apagar o primeiro de gas
+                dados.datasets[0].data.push(novoRegistro[0].porcentagemDetec); // incluir uma nova medida de gas
+
+
+                myChart.update();
+            }
+
+            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+            proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+        // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+        proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
+        
 
 
     //grafico de linha silo 1 
@@ -749,7 +905,7 @@
             datasets: [{
                 label: 'Silo 2',
                 //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
+                data: [],
                 borderWidth: 1
             }]
         },
@@ -809,7 +965,7 @@
             datasets: [{
                 label: 'Silo 2',
                 //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
+                data: [],
                 borderWidth: 1
             }]
         },
@@ -869,7 +1025,7 @@
             datasets: [{
                 label: 'Silo 2',
                 //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
+                data: [],
                 borderWidth: 1
             }]
         },
@@ -929,7 +1085,7 @@
             datasets: [{
                 label: 'Silo 2',
                 //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
+                data: [],
                 borderWidth: 1
             }]
         },

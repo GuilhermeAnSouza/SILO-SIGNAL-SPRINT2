@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <title>Login Suporte</title>
+    <script src="./js/sessao.js"></script>
     <link rel="icon" href="./assets/img/favicon.png" type="image/png">
 </head>
 <body>
@@ -44,11 +45,10 @@
                     <a href="index.html"><img src="./assets/img/logo2-Photoroom.png" alt=""></a>
                     <span class="tittleLog">Login Suporte</span>
                     <label for="userEmail">Email:</label>
-                    <input class="input" type="text" id="email_input" name="userEmail" oninput="validarEmailLogin()">
+                    <input class="input" type="text" id="email_input" name="userEmail">
 
                     <label for="iptUserPassword">Senha:</label>
-                    <input class="input" type="password" id="senha_input" name="password"
-                        oninput="validarPasswordLogin()">
+                    <input class="input" type="password" id="senha_input" name="password">
 
                     <div id="divErrorLogin"></div>
 
@@ -87,3 +87,93 @@
 </body>
 </html>
 
+<script>
+
+    function entrarSuporte() {
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "Preencha todos os campos.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        if (emailVar.includes("@silotech.com")) {
+
+            fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: emailVar,
+                    senhaServer: senhaVar
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
+                console.log(resposta)
+                if (resposta.ok) {
+                    console.log(resposta);
+    
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.ID_USUARIO = json.id;
+                        sessionStorage.FK_EMPRESA = json.empresaId;
+    
+                        setTimeout(function () {
+                            window.location = "./BobIa/public/index.html";
+                        }, 1000); // apenas para exibir o loading
+    
+                    });
+    
+                } else {
+                    
+                    console.log("Houve um erro ao tentar realizar o login!");
+                    cardErro.style.display = "block"
+                    mensagem_erro.innerHTML = "E-mail ou senha inválidos. Tente novamente";
+    
+                    setTimeout(sumirMensagem, 3000);
+                    finalizarAguardar();
+    
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+    
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+    
+            return false;
+        } else {
+            console.log("ERRO. Acesso negado ao suporte");
+                    cardErro.style.display = "block"
+                    mensagem_erro.innerHTML = "Acesso negado";
+    
+                    setTimeout(sumirMensagem, 3000);
+                    finalizarAguardar();
+    
+        }
+
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+</script>

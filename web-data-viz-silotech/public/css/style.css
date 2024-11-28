@@ -386,6 +386,7 @@ body {
     padding: 10px;
     margin-right: 10%;
     align-items: center;
+    top: 180px;
   }
   
   .card_erro #mensagem_erro{
@@ -398,7 +399,7 @@ main.conteudo {
     background-size: cover; 
     background-position: center;
     background-attachment: fixed; 
-    width: 98.9vw;
+    width: 100vw;
     height: 100wh;
     background-color: #8AA032;
     display: flex;
