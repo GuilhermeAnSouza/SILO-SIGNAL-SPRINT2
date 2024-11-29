@@ -96,6 +96,19 @@
       var senhaVar = senha_input.value;
       var confirmacaoSenhaVar = confirmaSenha_input.value;
       var codigoVar = codigoAtivacaoUsuario_input.value;
+      var naoMinusculo = senhaVar == senhaVar.toLowerCase(); 
+      var naoMaiusculo = senhaVar == senhaVar.toUpperCase();
+      var naoEspecial = !senhaVar.includes('@') && !senhaVar.includes('!') && 
+                      !senhaVar.includes('?') && !senhaVar.includes('#') && 
+                      !senhaVar.includes('$') && !senhaVar.includes('%') && 
+                      !senhaVar.includes('&') && !senhaVar.includes('*') && 
+                      !senhaVar.includes('.');
+      var naoNumero = !senhaVar.includes('1') && !senhaVar.includes('2') && 
+                      !senhaVar.includes('2') && !senhaVar.includes('3') && 
+                      !senhaVar.includes('4') && !senhaVar.includes('5') &&
+                      !senhaVar.includes('6') && !senhaVar.includes('7') &&
+                      !senhaVar.includes('8') && !senhaVar.includes('9')
+                      !senhaVar.includes('0');
       // var idEmpresaVincular
   
       // Verificando se há algum campo em branco
@@ -141,11 +154,11 @@
         setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
         return false;
-      } else if (senhaVar.length <= 8 ) {
+      } else if (senhaVar.length <= 8 || naoMaiusculo || naoMinusculo || naoEspecial || naoNumero) {
         cardErro.style.display = "block";
         // senha_input.style.border = "2px solid red"
         mensagem_erro.innerHTML =
-          "Sua senha deve conter mais que 8 caracteres.";
+          "A senha deve conter ao menos 8 caracteres, 1 número e 1 caractere especial, 1 letra maiúscula e 1 minúscula.";
   
         setTimeout(sumirMensagem, 3000);
         finalizarAguardar();
