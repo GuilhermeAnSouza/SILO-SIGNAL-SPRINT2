@@ -201,10 +201,19 @@
                     // limparFormulario();
                     finalizarAguardar();
                 } else {
-                    // resposta.json().then((j) => {
-                    //     mensagem_erro.innerHTML = j.mensagem;
-                    // })
-                    throw "CNPJ já cadastrado.";
+                    //  resposta.json().then((j) => {
+                    //      mensagem_erro.innerHTML = j;
+                    //  })
+
+                    var mensagem = "";
+
+                    if(resposta.status == 401){
+                        mensagem = "CNPJ já cadastrado."
+                    }else{
+                        mensagem = "Codigo de ativação já cadastrado."
+                    }
+
+                     throw mensagem;
                 }
             })
             .catch(function (resposta) {

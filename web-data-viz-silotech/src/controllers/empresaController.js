@@ -39,11 +39,19 @@ function cadastrar(req, res) {
     if (resultado.length > 0) {
       res
         .status(401)
-        .json({ mensagem: `a empresa com o cnpj ${cnpj} já existe` });
+        .json(`a empresa com o cnpj ${cnpj} já existe.`);
     } else {
-      empresaModel.cadastrar(razaoSocial, cnpj, telEmp, emailEmp, codigoAtivacao).then((resultado) => {
-        res.status(201).json(resultado);
-      });
+      empresaModel.buscarPorCodigoAtivacao(codigoAtivacao).then((resultado) => {
+        if(resultado.length > 0){
+          res.status(402).json(
+            `A empresa com o codigo ${codigoAtivacao} já existe.`
+          );
+        }else{
+          empresaModel.cadastrar(razaoSocial, cnpj, telEmp, emailEmp, codigoAtivacao).then((resultado) => {
+            res.status(201).json(resultado);
+          });
+        }
+      })
     }
   });
 
@@ -52,7 +60,6 @@ function cadastrar(req, res) {
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
-  // buscarPorCodigoAtivacao,
   cadastrar,
   listar,
 };

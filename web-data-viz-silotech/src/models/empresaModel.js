@@ -24,4 +24,10 @@ function cadastrar(razaoSocial, cnpj, telEmp, emailEmp, codigoAtivacao) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar };
+function buscarPorCodigoAtivacao(codigoAtivacao){
+  var instrucaoSql = `SELECT * FROM empresa WHERE codigoAtivacao = '${codigoAtivacao}';`;
+
+  return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, buscarPorCodigoAtivacao };
