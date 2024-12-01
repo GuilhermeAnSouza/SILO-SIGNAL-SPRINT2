@@ -1,39 +1,28 @@
 var database = require("../database/config");
 
+function buscarMedidasMeiaHora(siloId) {
 
-function buscarSiloSensoresEmpresa(empresaId) {
-
+  // Ajuste na consulta SQL para usar parâmetros preparados
   var instrucaoSql = `
-    SELECT * FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = ${empresaId}
-    `;
+    SELECT CAST(sensor.dataHora AS CHAR) AS dataHora,
+    sensor.porcentagemDetec AS porcentagem
+    FROM silo JOIN sensor 
+    ON sensor.fk_silo = silo.idSilo
+    WHERE fk_silo = ${siloId}
+    ORDER BY sensor.dataHora DESC LIMIT 50;
+  `;
 
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+  console.log("Executando SQL: ", instrucaoSql); // Log da consulta SQL
+
+  // Usando parâmetros preparados para evitar injeção de SQL
+  return database.executar(instrucaoSql)
+    .catch((erro) => {
+      console.error("Erro ao executar a consulta SQL: ", erro.sqlMessage);
+      throw erro; // Lança o erro para ser tratado em um nível superior
+    });
+
 }
-
-function kpis_silo1(idEmpresa, idSilo) {
-
-  var instrucaoSql = `
-  SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = ${idEmpresa} AND fk_silo = ${idSilo};
-    `;
-
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
-}
-
-function kpis_silo2(idEmpresa, idSilo) {
-
-  var instrucaoSql = `
-  SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = ${idEmpresa} AND fk_silo = ${idSilo};
-    `;
-
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
-}
-
 
 module.exports = {
-    buscarSiloSensoresEmpresa,
-    kpis_silo1,
-    kpis_silo2
-}
+  buscarMedidasMeiaHora
+};

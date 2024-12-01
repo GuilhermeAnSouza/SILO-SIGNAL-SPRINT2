@@ -1,60 +1,29 @@
-var dashboardModel = require("../models/dashboardModel")
+var dashboardModel = require("../models/dashboardModel");
 
-function buscarSiloSensoresEmpresa(){
- 
-var idEmpresa = req.params.idEmpresa
+function buscarMedidasMeiaHora(req, res) {
+  var siloId = req.params.siloId;
 
- dashboardModel.buscarSiloSensoresEmpresa(idEmpresa).then((resultado) => {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).json([]);
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar os aquarios: ", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
+  // Validação do siloId
+  if (!siloId || isNaN(siloId)) {
+    return res.status(400).json({ error: "ID do silo inválido." }); // Retorna erro 400 se o ID for inválido
+  }
 
-function kpis_silo1(req, res) {
-  var idEmpresa = req.params.idEmpresa
-  var idSilo = req.params.idSilo
+  console.log(`Buscando dados para o silo com ID: ${siloId}`);
 
-  dashboardModel.kpis_silo1(idEmpresa, idSilo).then((resultado) => {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).json([]);
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar as kpis: ", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-
-}
-
-function kpis_silo2(req, res) {
-  var idEmpresa = req.params.idEmpresa
-  var idSilo = req.params.idSilo
-
-  dashboardModel.kpis_silo2(idEmpresa, idSilo).then((resultado) => {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).json([]);
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar as kpis: ", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-
+  dashboardModel.buscarMedidasMeiaHora(siloId)
+      .then((resultado) => {
+          if (resultado.length > 0) {
+              res.status(200).json(resultado); // Retorna os dados se encontrados
+          } else {
+              res.status(204).json([]); // Nenhum dado encontrado
+          }
+      })
+      .catch((erro) => {
+          console.error("Erro ao buscar as últimas medidas do silo:", erro);
+          res.status(500).json({ error: "Erro interno no servidor.", detalhes: erro.message }); // Retorna o erro detalhado
+      });
 }
 
 module.exports = {
-    buscarSiloSensoresEmpresa,
-    kpis_silo1,
-    kpis_silo2
-}
+  buscarMedidasMeiaHora
+};

@@ -1,3 +1,4 @@
+"
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -89,8 +90,8 @@ kpis_silo2()">
 
                 <div class="input_select_silo">
                     <select id="select_silo" onclick="selecionarSilo()">
-                        <option value="silo1">SILO 1</option>
-                        <option value="silo2">SILO 2</option>
+                        <option value="1">SILO 1</option>
+                        <option value="2">SILO 2</option>
                     </select>
                     <div id="divMensagem"></div>
                 </div>
@@ -118,20 +119,20 @@ kpis_silo2()">
                         </div>
 
                         <div class="grafico-geral" id="grafico-hora">
-                            <canvas id="Silo1_meiaHora"></canvas>
+                            <canvas id="silo1_meiaHora"></canvas>
                         </div>
 
                     </div>
 
                     <div class="grafico-longo-prazo">
                         <div class="grafico-geral">
-                            <canvas id="Silo1_Dia"></canvas>
+                            <canvas id="silo1_dia"></canvas>
                         </div>
                         <div class="grafico-geral">
-                            <canvas id="Silo1_Semana"></canvas>
+                            <canvas id="silo1_semana"></canvas>
                         </div>
                         <div class="grafico-geral">
-                            <canvas id="Silo1_Semestre"></canvas>
+                            <canvas id="silo1_semestre"></canvas>
                         </div>
                     </div>
 
@@ -161,20 +162,20 @@ kpis_silo2()">
                         </div>
 
                         <div class="grafico-geral" id="grafico-hora">
-                            <canvas id="Silo2_meiaHora"></canvas>
+                            <canvas id="silo2_meiaHora"></canvas>
                         </div>
 
                     </div>
 
                     <div class="grafico-longo-prazo">
                         <div class="grafico-geral">
-                            <canvas id="Silo2_Dia"></canvas>
+                            <canvas id="silo2_dia"></canvas>
                         </div>
                         <div class="grafico-geral">
-                            <canvas id="Silo2_Semana"></canvas>
+                            <canvas id="silo2_semana"></canvas>
                         </div>
                         <div class="grafico-geral">
-                            <canvas id="Silo2_Semestre"></canvas>
+                            <canvas id="silo2_semestre"></canvas>
                         </div>
                     </div>
 
@@ -282,7 +283,7 @@ kpis_silo2()">
 </html>
 
 <script>
-
+    
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     document.getElementById('visaoGeral').style.display = 'flex';
@@ -302,19 +303,6 @@ kpis_silo2()">
         document.getElementById('visaoConfig').style.display = 'none'
         document.getElementById('dashboard-Silo1-ind').style.display = 'block'
         subTitulo.innerHTML = `DashBoard Individual`;
-    }
-
-    function selecionarSilo() {
-        var siloSelecionado = select_silo.value;
-        if (siloSelecionado == 'silo1') {
-            divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
-            document.getElementById('dashboard-Silo1-ind').style.display = 'block'
-            document.getElementById('dashboard-Silo2-ind').style.display = 'none'
-        } else if (siloSelecionado == 'silo2') {
-            divMensagem.innerHTML = 'Silo 2 selecionado com sucesso!'
-            document.getElementById('dashboard-Silo1-ind').style.display = 'none'
-            document.getElementById('dashboard-Silo2-ind').style.display = 'block'
-        }
     }
 
     function mostrarConfig() {
@@ -342,795 +330,110 @@ kpis_silo2()">
         }
     }
 
-    // funções kpis
+// -------- FUNÇÕES DASH DINÂMICA --------------------------------------------------------------------------------------------------- //
 
-    function kpis_silo1() {
-        var idEmpresa = sessionStorage.FK_EMPRESA;
-        var idSilo = 1
+    // Função para ser chamada quando a página for carregada
+window.onload = function () {
+    selecionarSilo(); // Inicializa a seleção do silo e começa a atualização
+};
 
-        fetch(`/dashboard/kpis_silo1/${idEmpresa}/${idSilo}`).then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.status == 204) {
-                    var conteudo = document.getElementById("porcentagem_silo1_ind");
-                    var mensagem = document.createElement("span");
-                    mensagem.innerHTML = "Nenhum resultado encontrado."
-                    conteudo.appendChild(mensagem);
-                    throw "Nenhum resultado encontrado.";
-                }
+    function selecionarSilo() {
+        const seletor = document.getElementById("select_silo");
+        const siloId = seletor.value;
+        atualizarPeriodicamente(siloId); // Chama a função passando o siloId
 
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                    var conteudo = document.getElementById("porcentagem_silo1_ind");
-                    conteudo.innerHTML = "";
-                    for (let i = 0; i < resposta.length; i++) {
-                        var lista = resposta[i];
-
-                        // silo 1 individual
-
-                        if (lista.porcentagemDetec < 4) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
-                        } else if (lista.porcentagemDetec < 9) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_atencao"></div>`
-                        } else if (lista.porcentagemDetec < 15) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
-                        }
-
-                        // silo 2 individual
-
-                        porcentagem_silo1_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
-
-                        if (lista.porcentagemDetec < 4) {
-                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
-                        } else if (lista.porcentagemDetec < 9) {
-                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_atencao"></div>`
-                        } else if (lista.porcentagemDetec < 15) {
-                            porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_alerta"></div>`
-                        }
-
-                        porcentagem_silo1_geral.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
-                    }
-                })
-            }
-        })
-
-    }
-
-    function kpis_silo2() {
-        var idEmpresa = sessionStorage.FK_EMPRESA;
-        var idSilo = 2
-
-        fetch(`/dashboard/kpis_silo2/${idEmpresa}/${idSilo}`).then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.status == 204) {
-                    var conteudo = document.getElementById("porcentagem_silo2_ind");
-                    var mensagem = document.createElement("span");
-                    mensagem.innerHTML = "Nenhum resultado encontrado."
-                    conteudo.appendChild(mensagem);
-                    throw "Nenhum resultado encontrado.";
-                }
-
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                    var conteudo = document.getElementById("porcentagem_silo2_ind");
-                    conteudo.innerHTML = "";
-                    for (let i = 0; i < resposta.length; i++) {
-                        var lista = resposta[i];
-
-                        // silo 1 individual
-
-                        if (lista.porcentagemDetec < 4) {
-                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
-                        } else if (lista.porcentagemDetec < 9) {
-                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_atencao"></div>`
-                        } else if (lista.porcentagemDetec < 15) {
-                            porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
-                        }
-
-                        // silo 2 individual
-
-                        porcentagem_silo2_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
-
-                        if (lista.porcentagemDetec < 4) {
-                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
-                        } else if (lista.porcentagemDetec < 9) {
-                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_atencao"></div>`
-                        } else if (lista.porcentagemDetec < 15) {
-                            porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_alerta"></div>`
-                        }
-
-                        porcentagem_silo2_geral.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
-                    }
-                })
-            }
-        })
-
-    }
-
-    function cadastrarUsuario() {
-        var nomeVar = nome_input.value;
-        var telUsuarioVar = telUsuario_input.value;
-        var emailUsuarioVar = emailUsuario_input.value;
-        var senhaVar = senha_input.value;
-        var confirmacaoSenhaVar = confirmaSenha_input.value;
-        var codigoVar = codigoAtivacaoUsuario_input.value;
-
-        if (
-            nomeVar == "" ||
-            telUsuarioVar == "" ||
-            emailUsuarioVar == "" ||
-            senhaVar == "" ||
-            confirmacaoSenhaVar == "" ||
-            codigoVar == ""
-        ) {
-            alert("Preencha todos os campos!")
-        } else {
-            usuarios_inseridos.innerHTML += `<p>
-                            Nome: ${nomeVar} | 
-                            Email Pessoal: ${emailUsuarioVar} | 
-                            Telefone Comercial: ${telUsuarioVar} | 
-                            </p>`
+        if (siloId == '1') {
+            divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
+            document.getElementById('dashboard-Silo1-ind').style.display = 'block'
+            document.getElementById('dashboard-Silo2-ind').style.display = 'none'
+        } else if (siloId == '2') {
+            divMensagem.innerHTML = 'Silo 2 selecionado com sucesso!'
+            document.getElementById('dashboard-Silo1-ind').style.display = 'none'
+            document.getElementById('dashboard-Silo2-ind').style.display = 'block'
         }
     }
 
-    function listarUsuario() {
-        var idEmpresa = sessionStorage.FK_EMPRESA;
+    function atualizarPeriodicamente(siloId) {
+    buscarDadosSilo1MeiaHora(siloId);
 
-        fetch(`/usuarios/listarUsuario/${idEmpresa}`).then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.status == 204) {
-                    var conteudo = document.getElementById("usuarios_inseridos");
-                    var mensagem = document.createElement("span");
-                    mensagem.innerHTML = "Nenhum resultado encontrado."
-                    conteudo.appendChild(mensagem);
-                    throw "Nenhum resultado encontrado.";
+    // tempo para atualização automática dos gráficos
+    setInterval(() => {
+        buscarDadosSilo1MeiaHora(siloId);
+    }, 30 * 60 * 1000); // 30 minutos em milissegundos
+}
+
+    function buscarDadosSilo1MeiaHora(siloId) {
+
+
+        // Faz a requisição para a API
+        fetch(`/dashboard/buscarMedidasMeiaHora/${siloId}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        console.log(`Dados recebidos para Silo ${siloId}: ${JSON.stringify(dados)}`);
+
+                        dados.reverse();
+
+                        // Chama a função para plotar os dados no gráfico
+                        plotarGrafico(dados, siloId);
+                    });
+                } else {
+                    console.error(`Nenhum dado encontrado ou erro na API para Silo ${siloId}`);
                 }
-
-                resposta.json().then(function (resposta) {
-                    console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                    var conteudo = document.getElementById("usuarios_inseridos");
-                    conteudo.innerHTML = "";
-                    for (let i = 0; i < resposta.length; i++) {
-                        var lista = resposta[i];
-
-                        usuarios_inseridos.innerHTML += `<p>
-                            Nome: ${lista.nome} | 
-                            Email Pessoal: ${lista.email} | 
-                            Telefone Comercial: ${lista.telComercial} | 
-                            </p>`
-                    }
-
-
-                })
-            }
-
-        }
-
-        )
-    }
-
-    // FUNCOES PARA PEGAR OS DADOS E ATUALIZAR O GRAFICO  
-    function obterDadosGrafico(idSilo) {
-
-        // alterarTitulo(idAquario)
-
-        if (proximaAtualizacao != undefined) {
-            clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/dashboard/${idSilo}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-                    plotarGrafico(resposta, idSilo);
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
+            })
             .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                console.error(`Erro na obtenção dos dados para o gráfico do Silo ${siloId}: ${error.message}`);
             });
     }
 
-    function plotarGrafico(resposta, empresaId) {
 
-        console.log('iniciando plotagem do gráfico...');
+    function plotarGrafico(dados, siloId) {
+        // Preparar os dados para o gráfico
+        const labels = dados.map(dado => dado.dataHora);
+        const porcentagem = dados.map(dado => dado.porcentagem);
 
-        // Criando estrutura para plotar gráfico - labels
-        let labels = [];
+        // elemento canvas do gráfico
+        const ctx = document.getElementById(`silo${siloId}_meiaHora`).getContext('2d');
 
-        // Criando estrutura para plotar gráfico - dados
-        let dados = {
-            labels: labels,
-            datasets: [{
-                label: 'gás',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }],
-            
-        };
-
-        console.log('----------------------------------------------')
-        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-        console.log(resposta)
-
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (i = 0; i < resposta.length; i++) {
-            var registro = resposta[i];
-            labels.push(registro.momento_grafico);
-            dados.datasets.data.push(registro.umidade);
+        if (window[`graficoSilo${siloId}`]) {
+            window[`graficoSilo${siloId}`].data.labels = labels;
+            window[`graficoSilo${siloId}`].data.datasets[0].data = porcentagem;
+            window[`graficoSilo${siloId}`].update();
+        } else {
+            window[`graficoSilo${siloId}`] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Porcentagem do Silo ${siloId} (Última Meia Hora)`,
+                        data: porcentagem,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tempo'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Porcentagem (%)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
-
-        console.log('----------------------------------------------')
-        console.log('O gráfico será plotado com os respectivos valores:')
-        console.log('Labels:')
-        console.log(labels)
-        console.log('Dados:')
-        console.log(dados.datasets)
-        console.log('----------------------------------------------')
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-            type: 'line',
-            data: dados,
-        };
-
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(
-            document.getElementById(`myChartCanvas${idAquario}`),
-            config
-        );
-
-        setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
     }
-    
-    function atualizarGrafico(idAquario, dados, myChart) {
 
 
-
-fetch(`/dashboard/buscarSiloSensoresEmpresa/${idSilo}`, { cache: 'no-store' }).then(function (response) {
-    if (response.ok) {
-        response.json().then(function (novoRegistro) {
-
-            obterdados(idSilo);
-            // alertar(novoRegistro, idAquario);
-            console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-            console.log(`Dados atuais do gráfico:`);
-            console.log(dados);
-
-            // let avisoCaptura = document.getElementById(`avisoCaptura${idAquario}`)
-            // avisoCaptura.innerHTML = ""
-
-
-            if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                console.log("---------------------------------------------------------------")
-                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                console.log("Horário do novo dado capturado:")
-                console.log(novoRegistro[0].momento_grafico)
-                console.log("Horário do último dado capturado:")
-                console.log(dados.labels[dados.labels.length - 1])
-                console.log("---------------------------------------------------------------")
-            } else {
-                // tirando e colocando valores no gráfico
-                dados.labels.shift(); // apagar o primeiro
-                dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
-
-                dados.datasets[0].data.shift();  // apagar o primeiro de gas
-                dados.datasets[0].data.push(novoRegistro[0].porcentagemDetec); // incluir uma nova medida de gas
-
-
-                myChart.update();
-            }
-
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-        });
-    } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-        // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-        proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-    }
-})
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
-
-}
-        
-
-
-    //grafico de linha silo 1 
-
-    const Silo1_meiaHora = document.getElementById('Silo1_meiaHora');
-
-    new Chart(Silo1_meiaHora, {
-        type: 'line',
-        data: {
-            //aqui devem ir os periodos de tempo (30min em 30min)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 1',
-                //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-
-    const Silo1_Dia = document.getElementById('Silo1_Dia');
-
-    new Chart(Silo1_Dia, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (diariamente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 1',
-                //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    const Silo1_Semana = document.getElementById('Silo1_Semana');
-
-    new Chart(Silo1_Semana, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (Semanalmente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 1',
-                //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    const Silo1_Semestre = document.getElementById('Silo1_Semestre');
-
-    new Chart(Silo1_Semestre, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (semestralmente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 1',
-                //valores que devem vir do sensor
-                data: [0.12, 0.19, 0.37, 0.55, 1.27],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    //grafico de linha silo 2
-
-    const Silo2_meiaHora = document.getElementById('Silo2_meiaHora');
-
-    new Chart(Silo2_meiaHora, {
-        type: 'line',
-        data: {
-            //aqui devem ir os periodos de tempo (30min em 30min)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 2',
-                //valores que devem vir do sensor
-                data: [],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    const Silo2_Dia = document.getElementById('Silo2_Dia');
-
-    new Chart(Silo2_Dia, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (diariamente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 2',
-                //valores que devem vir do sensor
-                data: [],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    const Silo2_Semana = document.getElementById('Silo2_Semana');
-
-    new Chart(Silo2_Semana, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (Semanalmente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 2',
-                //valores que devem vir do sensor
-                data: [],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
-
-    const Silo2_Semestre = document.getElementById('Silo2_Semestre');
-
-    new Chart(Silo2_Semestre, {
-        type: 'bar',
-        data: {
-            //aqui devem ir os periodos de tempo (semestralmente)
-
-            labels: ['10:30', '11:00', '11:30', '12:00', '12:30'],
-
-            datasets: [{
-                label: 'Silo 2',
-                //valores que devem vir do sensor
-                data: [],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'rgb(255, 255, 255)',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                },
-                x: {
-                    grid: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 16
-                        },
-                        color: 'rgb(255, 255, 255)'
-                    }
-                }
-            }
-        }
-    });
 
 </script>
