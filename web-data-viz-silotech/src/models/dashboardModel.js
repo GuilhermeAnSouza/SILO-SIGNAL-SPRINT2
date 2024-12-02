@@ -2,7 +2,7 @@ var database = require("../database/config");
 
 function buscarMedidasMeiaHora(siloId) {
   var instrucaoSql = `
-    SELECT CAST(sensor.dataHora AS CHAR) AS dataHora,
+    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d às %H:%i') AS dataHora,
     sensor.porcentagemDetec AS porcentagem
     FROM silo JOIN sensor 
     ON sensor.fk_silo = silo.idSilo
@@ -22,12 +22,13 @@ function buscarMedidasMeiaHora(siloId) {
 
 function buscarDadosSiloSemana(siloId) {
   var instrucaoSql = `
-    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d') AS dataHora,
-    MAX(porcentagemDetec) AS porcentagem
-    FROM sensor WHERE dataHora >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-    AND fk_silo = ${siloId}
-    GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d')
-    ORDER BY dataHora DESC LIMIT 7;
+    SELECT MAX(porcentagemDetec) AS porcentagem,
+    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL -WEEKDAY(dataHora) DAY), '%Y-%m-%d') AS inicioSemana,
+    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL (6 - WEEKDAY(dataHora)) DAY), '%Y-%m-%d') AS fimSemana
+    FROM sensor WHERE fk_silo = ${siloId}
+    AND dataHora >= DATE_ADD(NOW(), INTERVAL -2 MONTH)
+    GROUP BY inicioSemana, fimSemana
+    ORDER BY inicioSemana DESC LIMIT 7;
   `;
 
   console.log("Executando SQL: ", instrucaoSql); 

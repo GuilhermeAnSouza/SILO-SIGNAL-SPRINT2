@@ -631,7 +631,7 @@ kpis_silo2()">
     }
 
 
-    function buscarDadosSilo1MeiaHora(siloId) {
+    function buscarDadosSiloMeiaHora(siloId) {
         // Faz a requisição para a API
         fetch(`/dashboard/buscarMedidasMeiaHora/${siloId}`, { cache: 'no-store' })
             .then(function (response) {
