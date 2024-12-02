@@ -1,4 +1,3 @@
-"
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,15 +7,28 @@
     <title>Silo Tech | Dashboard</title>
     <link rel="icon" href="./assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../js/sessao.js">
+    <script src="./js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body onload="
+listar(),
 listarUsuario(),
 kpis_silo1(),
 kpis_silo2()">
 
     <div class="conteudo-geral">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div id="div_aguardar" class="loading-div">
+            <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
+        </div>
+
+        <div id="div_erros_login"></div>
 
         <div class="container-menu">
 
@@ -284,6 +296,8 @@ kpis_silo2()">
 
 <script>
 
+    listaEmpresasCadastradas = [];
+
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     document.getElementById('visaoGeral').style.display = 'flex';
@@ -330,6 +344,25 @@ kpis_silo2()">
         }
     }
 
+    function listar() {
+        fetch("/empresas/listar", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                resposta.json().then((empresas) => {
+                    empresas.forEach((empresa) => {
+                        listaEmpresasCadastradas.push(empresa);
+
+                        console.log("listaEmpresasCadastradas")
+                        console.log(listaEmpresasCadastradas[0].codigoAtivacao)
+                    });
+                });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
     function listarUsuario() {
         var idEmpresa = sessionStorage.FK_EMPRESA;
 
@@ -360,7 +393,206 @@ kpis_silo2()">
                 })
             }
         });
+    };
+
+    function cadastrarUsuario() {
+        event.preventDefault();
+        // aguardar();
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nomeVar = nome_input.value;
+        var telUsuarioVar = telUsuario_input.value;
+        var emailUsuarioVar = emailUsuario_input.value;
+        var senhaVar = senha_input.value;
+        var confirmacaoSenhaVar = confirmaSenha_input.value;
+        var codigoVar = codigoAtivacaoUsuario_input.value;
+        var naoMinusculo = senhaVar == senhaVar.toLowerCase();
+        var naoMaiusculo = senhaVar == senhaVar.toUpperCase();
+        var naoEspecial = !senhaVar.includes('@') && !senhaVar.includes('!') &&
+            !senhaVar.includes('?') && !senhaVar.includes('#') &&
+            !senhaVar.includes('$') && !senhaVar.includes('%') &&
+            !senhaVar.includes('&') && !senhaVar.includes('*') &&
+            !senhaVar.includes('.');
+        var naoNumero = !senhaVar.includes('1') && !senhaVar.includes('2') &&
+            !senhaVar.includes('2') && !senhaVar.includes('3') &&
+            !senhaVar.includes('4') && !senhaVar.includes('5') &&
+            !senhaVar.includes('6') && !senhaVar.includes('7') &&
+            !senhaVar.includes('8') && !senhaVar.includes('9')
+        !senhaVar.includes('0');
+        // var idEmpresaVincular
+
+        // Verificando se há algum campo em branco
+        if (
+            nomeVar == "" ||
+            telUsuarioVar == "" ||
+            emailUsuarioVar == "" ||
+            senhaVar == "" ||
+            confirmacaoSenhaVar == "" ||
+            codigoVar == ""
+        ) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML =
+                "Preencha todos os campos.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (nomeVar.length < 5) {
+            cardErro.style.display = "block";
+            // nome_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um nome válido.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (telUsuarioVar.length < 10) {
+            cardErro.style.display = "block";
+            // cpf_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um telefone válido.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (emailUsuarioVar.includes('@') == false) {
+            cardErro.style.display = "block";
+            // email_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Insira um email válido.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (senhaVar.length <= 8 || naoMaiusculo || naoMinusculo || naoEspecial || naoNumero) {
+            cardErro.style.display = "block";
+            // senha_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "A senha deve conter ao menos 8 caracteres, 1 número e 1 caractere especial, 1 letra maiúscula e 1 minúscula.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (emailUsuarioVar.includes('@') == false || emailUsuarioVar.includes('.') == false) {
+            cardErro.style.display = "block";
+            // senha_input.style.border = "2px solid red"
+            mensagem_erro.innerHTML =
+                "Sua email deve conter arroba e ponto final.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else if (confirmacaoSenhaVar != senhaVar) {
+            cardErro.style.display = "block";
+            // confirmacao_senha_input.style.boder = "2px solid red";
+            // senha_input.style.border = "2px solid red";
+            mensagem_erro.innerHTML =
+                "As senhas não coincidem.";
+
+            setTimeout(sumirMensagem, 3000);
+            finalizarAguardar();
+            return false;
+        } else {
+            usuarios_inseridos.innerHTML += `<p>
+                            Nome: ${nomeVar} | 
+                            Email Pessoal: ${emailUsuarioVar} | 
+                            Telefone Comercial: ${telUsuarioVar} | 
+                            </p>`
+            setInterval(sumirMensagem, 3000);
+
+        }
+
+        // Verificando se o código de ativação é de alguma empresa cadastrada
+        for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+            if (listaEmpresasCadastradas[i].codigoAtivacao == codigoVar) {
+                idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa
+                console.log("Código de ativação válido.");
+                break;
+            } else {
+                cardErro.style.display = "block";
+                mensagem_erro.innerHTML = "Código de validação inválido.";
+                finalizarAguardar();
+            }
+        }
+
+
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeServer: nomeVar,
+                telUsuarioServer: telUsuarioVar,
+                emailUsuarioServer: emailUsuarioVar,
+                senhaServer: senhaVar,
+                idEmpresaVincularServer: idEmpresaVincular
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    cardErro.style.display = "block";
+
+                    mensagem_erro.innerHTML =
+                        "Cadastro do usuário realizado com sucesso!";
+
+                    // setTimeout(() => {
+                    //     window.location = "login.html";
+                    // }, "2000");
+
+                    limparFormulario();
+                    finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
+        return false;
     }
+
+    function sumirMensagem() {
+    console.log("Função sumirMensagem chamada"); // Verificação de execução
+    const cardErro = document.getElementById("cardErro");
+    if (cardErro) {
+        cardErro.style.display = "none";
+    }
+}
+
+    // function cadastrarUsuario() {
+    //     var nomeVar = nome_input.value;
+    //     var telUsuarioVar = telUsuario_input.value;
+    //     var emailUsuarioVar = emailUsuario_input.value;
+    //     var senhaVar = senha_input.value;
+    //     var confirmacaoSenhaVar = confirmaSenha_input.value;
+    //     var codigoVar = codigoAtivacaoUsuario_input.value;
+
+    //     if (
+    //         nomeVar == "" ||
+    //         telUsuarioVar == "" ||
+    //         emailUsuarioVar == "" ||
+    //         senhaVar == "" ||
+    //         confirmacaoSenhaVar == "" ||
+    //         codigoVar == ""
+    //     ) {
+    //         alert("Preencha todos os campos!")
+    //     } else {
+    //         usuarios_inseridos.innerHTML += `<p>
+    //                         Nome: ${nomeVar} | 
+    //                         Email Pessoal: ${emailUsuarioVar} | 
+    //                         Telefone Comercial: ${telUsuarioVar} | 
+    //                         </p>`
+    //     }
+    // }
 
     // -------- FUNÇÕES DASH DINÂMICA --------------------------------------------------------------------------------------------------- //
     // GRÁFICO DE LINHA A CADA MEIA HORA (SILO 1 E SILO 2)
