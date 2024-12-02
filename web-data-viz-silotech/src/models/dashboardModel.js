@@ -22,12 +22,12 @@ function buscarMedidasMeiaHora(siloId) {
 
 function buscarDadosSiloSemana(siloId) {
   var instrucaoSql = `
-    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d') AS dataDia,
-    MAX(porcentagemDetec) AS porcentagemMax
+    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d') AS dataHora,
+    MAX(porcentagemDetec) AS porcentagem
     FROM sensor WHERE dataHora >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
     AND fk_silo = ${siloId}
     GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d')
-    ORDER BY dataDia DESC LIMIT 7;
+    ORDER BY dataHora DESC LIMIT 7;
   `;
 
   console.log("Executando SQL: ", instrucaoSql); 
