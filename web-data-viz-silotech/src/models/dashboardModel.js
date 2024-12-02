@@ -42,13 +42,13 @@ function buscarDadosSiloSemana(siloId) {
 
 function buscarDadosSiloSemestral(siloId) {
   var instrucaoSql = `
-      SELECT DATE_FORMAT(dataHora, '%Y-%m') AS Mês,
-      MAX(porcentagemDetec) AS PorcentagemMaxima
+      SELECT DATE_FORMAT(dataHora, '%Y-%m') AS dataHora,
+      MAX(porcentagemDetec) AS porcentagem
       FROM sensor 
       WHERE fk_silo = ${siloId}
       AND dataHora >= DATE_ADD(NOW(), INTERVAL -6 MONTH)
       GROUP BY DATE_FORMAT(dataHora, '%Y-%m')
-      ORDER BY Mês DESC LIMIT 6;
+      ORDER BY dataHora DESC LIMIT 6;
   `;
 
   console.log("Executando SQL: ", instrucaoSql); 
