@@ -1,6 +1,6 @@
 var database = require("../database/config");
 
-function buscarMedidas6horas(siloId){
+function buscarMedidas6horas(siloId) {
   var instrucaoSql = `
     SELECT DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') AS dataHora, 
     MAX(porcentagemDetec) AS porcentagem
@@ -28,12 +28,12 @@ function buscarMedidasMeiaHora(siloId) {
     ORDER BY sensor.dataHora DESC LIMIT 50;
   `;
 
-  console.log("Executando SQL: ", instrucaoSql); 
+  console.log("Executando SQL: ", instrucaoSql);
 
   return database.executar(instrucaoSql)
     .catch((erro) => {
       console.error("Erro ao executar a consulta SQL: ", erro.sqlMessage);
-      throw erro; 
+      throw erro;
     });
 
 }
@@ -49,12 +49,12 @@ function buscarDadosSiloSemana(siloId) {
     ORDER BY dataHora DESC LIMIT 7;
   `;
 
-  console.log("Executando SQL: ", instrucaoSql); 
+  console.log("Executando SQL: ", instrucaoSql);
 
   return database.executar(instrucaoSql)
     .catch((erro) => {
       console.error("Erro ao executar a consulta SQL: ", erro.sqlMessage);
-      throw erro; 
+      throw erro;
     });
 
 }
@@ -70,19 +70,39 @@ function buscarDadosSiloSemestral(siloId) {
       ORDER BY dataHora DESC LIMIT 6;
   `;
 
-  console.log("Executando SQL: ", instrucaoSql); 
+  console.log("Executando SQL: ", instrucaoSql);
 
   return database.executar(instrucaoSql)
     .catch((erro) => {
       console.error("Erro ao executar a consulta SQL: ", erro.sqlMessage);
-      throw erro; 
+      throw erro;
     });
 
+}
+
+function kpis_silo1(idEmpresa, idSilo) {
+
+  var instrucaoSql = `
+    SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = ${idEmpresa} AND fk_silo = ${idSilo} LIMIT 1;
+    `;
+
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
+function kpis_silo2(idEmpresa, idSilo) {
+  var instrucaoSql = `
+  SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = ${idEmpresa} AND fk_silo = ${idSilo} LIMIT 1;
+    `;
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
 }
 
 module.exports = {
   buscarMedidas6horas,
   buscarMedidasMeiaHora,
   buscarDadosSiloSemana,
-  buscarDadosSiloSemestral
+  buscarDadosSiloSemestral,
+  kpis_silo1,
+  kpis_silo2
 };
