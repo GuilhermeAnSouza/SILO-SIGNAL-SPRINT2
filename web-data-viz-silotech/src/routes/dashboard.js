@@ -4,6 +4,10 @@ var router = express.Router();
 var dashboardController = require('../controllers/dashboardController.js');
 
 // Rota para buscar as últimas medidas do silo
+router.get('/buscarMedidas6horas/:siloId', function (req, res) {
+  dashboardController.buscarMedidas6horas(req, res);
+});
+
 router.get('/buscarMedidasMeiaHora/:siloId', function (req, res) {
     dashboardController.buscarMedidasMeiaHora(req, res);
 });

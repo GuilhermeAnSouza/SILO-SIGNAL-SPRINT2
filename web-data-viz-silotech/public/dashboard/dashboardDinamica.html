@@ -614,6 +614,7 @@ kpis_silo2()">
 
     function atualizarPeriodicamente(siloId) {
         buscarDadosSilo1MeiaHora(siloId);
+        buscarDadosSilo6horas(siloId);
         buscarDadosSiloSemana(siloId);
         buscarDadosSiloSemestral(siloId);
 
@@ -622,12 +623,83 @@ kpis_silo2()">
         }, 30 * 60 * 1000); // 30 minutos em milissegundos
 
         setTimeout(() => {
+            buscarDadosSilo6horas(siloId);
+        }, 21600000); // 30 minutos em milissegundos
+
+        setTimeout(() => {
             buscarDadosSiloSemana(siloId);
         }, 1.000 * 120 * 24 * 7); // 604.800.000 milhoes milissegundos - 7 dias
 
         setTimeout(() => {
             buscarDadosSiloSemestral(siloId);
         }, 15780096 * 1000); // 6 meses em milissegundos
+    }
+    
+    function buscarDadosSilo6horas(siloId) {
+        // Faz a requisição para a API
+        fetch(`/dashboard/buscarMedidas6horas/${siloId}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        console.log(`Dados recebidos para Silo ${siloId}: ${JSON.stringify(dados)}`);
+
+                        dados.reverse();
+
+                        plotarGrafico6horas(dados, siloId);
+                    });
+                } else {
+                    console.error(`Nenhum dado encontrado ou erro na API para Silo ${siloId}`);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico do Silo ${siloId}: ${error.message}`);
+            });
+    }
+
+    function plotarGrafico6horas(dados, siloId) {
+        const labels = dados.map(dado => dado.dataHora);
+        const porcentagem = dados.map(dado => dado.porcentagem);
+
+        const ctx = document.getElementById(`silo${siloId}_meiaHora`).getContext('2d');
+
+        if (window[`graficoSilo6horas${siloId}`]) {
+            window[`graficoSilo6horas${siloId}`].data.labels = labels;
+            window[`graficoSilo6horas${siloId}`].data.datasets[0].data = porcentagem;
+            window[`graficoSilo6horas${siloId}`].update();
+        } else {
+            window[`graficoSilo6horas${siloId}`] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Maior % diária a cada 6 horas`,
+                        data: porcentagem,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: ''
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Porcentagem (%)'
+                            },
+                            beginAtZero: true,
+                            suggestedMax: 15,
+                        }
+                    }
+                }
+            });
+        }
     }
 
 

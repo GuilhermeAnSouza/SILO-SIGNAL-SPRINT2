@@ -1,5 +1,18 @@
 var database = require("../database/config");
 
+function buscarMedidas6horas(siloId){
+  var instrucaoSql = `
+   
+  `;
+
+  console.log(`Exececutando SQL: `, instrucaoSql);
+  return database.executar(instrucaoSql)
+    .catch((erro) => {
+      console.error("Error ao executar a consulta SQL: ", erro.sqlMessage);
+      throw erro;
+    });
+}
+
 function buscarMedidasMeiaHora(siloId) {
   var instrucaoSql = `
     SELECT DATE_FORMAT(dataHora, '%Y-%m-%d às %H:%i') AS dataHora,
@@ -63,6 +76,7 @@ function buscarDadosSiloSemestral(siloId) {
 }
 
 module.exports = {
+  buscarMedidas6horas,
   buscarMedidasMeiaHora,
   buscarDadosSiloSemana,
   buscarDadosSiloSemestral

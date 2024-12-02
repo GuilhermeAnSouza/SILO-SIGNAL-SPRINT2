@@ -80,6 +80,8 @@ insert into sensor(dtImplementacao, porcentagemDetec, dataHora, statusFuncioname
 
 SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where fk_empresa = 1 and fk_silo = 2;
 
+select * from sensor;
 
+select max(porcentagemDetec) as MaiorPercentMes from sensor where dataHora < '2024-11-28 14:12:00' AND dataHora > '2024-10-31 00:00:00';
 
 -- drop database silosignal;
