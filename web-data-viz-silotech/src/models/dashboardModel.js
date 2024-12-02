@@ -2,6 +2,12 @@ var database = require("../database/config");
 
 function buscarMedidas6horas(siloId){
   var instrucaoSql = `
+    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') AS dataHora, 
+    MAX(porcentagemDetec) AS porcentagem
+    FROM sensor WHERE fk_silo = ${siloId}
+    AND dataHora >= DATE_ADD(NOW(), INTERVAL -6 HOUR) 
+    GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') 
+    ORDER BY dataHora DESC;
    
   `;
 
