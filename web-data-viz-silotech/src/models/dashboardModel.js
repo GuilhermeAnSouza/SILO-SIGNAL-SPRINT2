@@ -8,7 +8,6 @@ function buscarMedidas6horas(siloId){
     AND dataHora >= DATE_ADD(NOW(), INTERVAL -6 HOUR) 
     GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') 
     ORDER BY dataHora DESC;
-   
   `;
 
   console.log(`Exececutando SQL: `, instrucaoSql);
@@ -42,12 +41,12 @@ function buscarMedidasMeiaHora(siloId) {
 function buscarDadosSiloSemana(siloId) {
   var instrucaoSql = `
     SELECT MAX(porcentagemDetec) AS porcentagem,
-    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL -WEEKDAY(dataHora) DAY), '%Y-%m-%d') AS inicioSemana,
-    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL (6 - WEEKDAY(dataHora)) DAY), '%Y-%m-%d') AS fimSemana
+    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL -WEEKDAY(dataHora) DAY), '%Y-%m-%d') AS dataHora,
+    DATE_FORMAT(DATE_ADD(dataHora, INTERVAL (6 - WEEKDAY(dataHora)) DAY), '%Y-%m-%d') AS dataHora
     FROM sensor WHERE fk_silo = ${siloId}
     AND dataHora >= DATE_ADD(NOW(), INTERVAL -2 MONTH)
-    GROUP BY inicioSemana, fimSemana
-    ORDER BY inicioSemana DESC LIMIT 7;
+    GROUP BY dataHora, dataHora
+    ORDER BY dataHora DESC LIMIT 7;
   `;
 
   console.log("Executando SQL: ", instrucaoSql); 

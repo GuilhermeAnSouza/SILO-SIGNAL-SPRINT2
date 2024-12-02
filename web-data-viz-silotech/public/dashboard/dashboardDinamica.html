@@ -138,7 +138,7 @@ kpis_silo2()">
 
                     <div class="grafico-longo-prazo">
                         <div class="grafico-geral">
-                            <canvas id="silo1_dia"></canvas>
+                            <canvas id="silo1_6horas"></canvas>
                         </div>
                         <div class="grafico-geral">
                             <canvas id="silo1_semana"></canvas>
@@ -660,7 +660,7 @@ kpis_silo2()">
         const labels = dados.map(dado => dado.dataHora);
         const porcentagem = dados.map(dado => dado.porcentagem);
 
-        const ctx = document.getElementById(`silo${siloId}_meiaHora`).getContext('2d');
+        const ctx = document.getElementById(`silo${siloId}_6horas`).getContext('2d');
 
         if (window[`graficoSilo6horas${siloId}`]) {
             window[`graficoSilo6horas${siloId}`].data.labels = labels;
@@ -668,7 +668,7 @@ kpis_silo2()">
             window[`graficoSilo6horas${siloId}`].update();
         } else {
             window[`graficoSilo6horas${siloId}`] = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -693,8 +693,8 @@ kpis_silo2()">
                                 display: true,
                                 text: 'Porcentagem (%)'
                             },
-                            beginAtZero: true,
-                            suggestedMax: 15,
+                            beginAtZero: true
+                            // suggestedMax: 15,
                         }
                     }
                 }
@@ -703,7 +703,7 @@ kpis_silo2()">
     }
 
 
-    function buscarDadosSiloMeiaHora(siloId) {
+    function buscarDadosSilo1MeiaHora(siloId) {
         // Faz a requisição para a API
         fetch(`/dashboard/buscarMedidasMeiaHora/${siloId}`, { cache: 'no-store' })
             .then(function (response) {
