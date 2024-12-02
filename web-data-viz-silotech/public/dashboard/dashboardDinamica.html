@@ -12,6 +12,7 @@
 </head>
 
 <body onload="
+listarUsuario(),
 kpis_silo1(),
 kpis_silo2()">
 
@@ -329,6 +330,38 @@ kpis_silo2()">
         }
     }
 
+    function listarUsuario() {
+        var idEmpresa = sessionStorage.FK_EMPRESA;
+
+        fetch(`/usuarios/listarUsuario/${idEmpresa}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var conteudo = document.getElementById("usuarios_inseridos");
+                    var mensagem = document.createElement("span");
+                    mensagem.innerHTML = "Nenhum resultado encontrado."
+                    conteudo.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado.";
+                }
+
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    var conteudo = document.getElementById("usuarios_inseridos");
+                    conteudo.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var lista = resposta[i];
+
+                        usuarios_inseridos.innerHTML += `<p>
+                            Nome: ${lista.nome} | 
+                            Email Pessoal: ${lista.email} | 
+                            Telefone Comercial: ${lista.telComercial} | 
+                            </p>`
+                    }
+                })
+            }
+        });
+    }
+
     // -------- FUNÇÕES DASH DINÂMICA --------------------------------------------------------------------------------------------------- //
     // GRÁFICO DE LINHA A CADA MEIA HORA (SILO 1 E SILO 2)
     function selecionarSilo() {
@@ -404,9 +437,9 @@ kpis_silo2()">
                     labels: labels,
                     datasets: [{
                         label: `Maior % diária dos últimos 7 dias`,
-                        data: porcentagem, 
+                        data: porcentagem,
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)', 
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderWidth: 1
                     }]
                 },
@@ -425,7 +458,7 @@ kpis_silo2()">
                                 text: 'Porcentagem (%)'
                             },
                             beginAtZero: true,
-                            suggestedMax: 15, 
+                            suggestedMax: 15,
                         }
                     }
                 }
@@ -491,7 +524,7 @@ kpis_silo2()">
                                 text: 'Porcentagem (%)'
                             },
                             beginAtZero: true,
-                            suggestedMax: 15, 
+                            suggestedMax: 15,
                         }
                     }
                 }
@@ -502,7 +535,7 @@ kpis_silo2()">
 
     function buscarDadosSiloSemestral(siloId) {
         fetch(`/dashboard/buscarDadosSiloSemestral/${siloId}`, { cache: 'no-store' })
-        .then(function (response) {
+            .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (dados) {
                         console.log(`Dados recebidos para Silo ${siloId}: ${JSON.stringify(dados)}`);
@@ -558,7 +591,7 @@ kpis_silo2()">
                                 text: 'Porcentagem (%)'
                             },
                             beginAtZero: true,
-                            suggestedMax: 15, 
+                            suggestedMax: 15,
                         }
                     }
                 }
