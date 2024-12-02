@@ -12,7 +12,6 @@
 </head>
 
 <body onload="
-listarUsuario(), 
 kpis_silo1(),
 kpis_silo2()">
 
@@ -283,7 +282,7 @@ kpis_silo2()">
 </html>
 
 <script>
-    
+
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     document.getElementById('visaoGeral').style.display = 'flex';
@@ -330,17 +329,12 @@ kpis_silo2()">
         }
     }
 
-// -------- FUNÇÕES DASH DINÂMICA --------------------------------------------------------------------------------------------------- //
-
-    // Função para ser chamada quando a página for carregada
-window.onload = function () {
-    selecionarSilo(); // Inicializa a seleção do silo e começa a atualização
-};
-
+    // -------- FUNÇÕES DASH DINÂMICA --------------------------------------------------------------------------------------------------- //
+    // GRÁFICO DE LINHA A CADA MEIA HORA (SILO 1 E SILO 2)
     function selecionarSilo() {
         const seletor = document.getElementById("select_silo");
         const siloId = seletor.value;
-        atualizarPeriodicamente(siloId); // Chama a função passando o siloId
+        atualizarPeriodicamente(siloId);
 
         if (siloId == '1') {
             divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
@@ -354,17 +348,25 @@ window.onload = function () {
     }
 
     function atualizarPeriodicamente(siloId) {
-    buscarDadosSilo1MeiaHora(siloId);
-
-    // tempo para atualização automática dos gráficos
-    setInterval(() => {
         buscarDadosSilo1MeiaHora(siloId);
-    }, 30 * 60 * 1000); // 30 minutos em milissegundos
-}
+        buscarDadosSiloSemana(siloId);
+        buscarDadosSiloSemestral(siloId);
+
+        setTimeout(() => {
+            buscarDadosSilo1MeiaHora(siloId);
+        }, 30 * 60 * 1000); // 30 minutos em milissegundos
+
+        setTimeout(() => {
+            buscarDadosSiloSemana(siloId);
+        }, 1.000 * 120 * 24 * 7); // 604.800.000 milhoes milissegundos - 7 dias
+
+        setTimeout(() => {
+            buscarDadosSiloSemestral(siloId);
+        }, 15780096 * 1000); // 6 meses em milissegundos
+    }
+
 
     function buscarDadosSilo1MeiaHora(siloId) {
-
-
         // Faz a requisição para a API
         fetch(`/dashboard/buscarMedidasMeiaHora/${siloId}`, { cache: 'no-store' })
             .then(function (response) {
@@ -374,8 +376,7 @@ window.onload = function () {
 
                         dados.reverse();
 
-                        // Chama a função para plotar os dados no gráfico
-                        plotarGrafico(dados, siloId);
+                        plotarGraficoMeiaHora(dados, siloId);
                     });
                 } else {
                     console.error(`Nenhum dado encontrado ou erro na API para Silo ${siloId}`);
@@ -386,29 +387,26 @@ window.onload = function () {
             });
     }
 
-
-    function plotarGrafico(dados, siloId) {
-        // Preparar os dados para o gráfico
+    function plotarGraficoMeiaHora(dados, siloId) {
         const labels = dados.map(dado => dado.dataHora);
         const porcentagem = dados.map(dado => dado.porcentagem);
 
-        // elemento canvas do gráfico
         const ctx = document.getElementById(`silo${siloId}_meiaHora`).getContext('2d');
 
-        if (window[`graficoSilo${siloId}`]) {
-            window[`graficoSilo${siloId}`].data.labels = labels;
-            window[`graficoSilo${siloId}`].data.datasets[0].data = porcentagem;
-            window[`graficoSilo${siloId}`].update();
+        if (window[`graficoSiloMeiaHora${siloId}`]) {
+            window[`graficoSiloMeiaHora${siloId}`].data.labels = labels;
+            window[`graficoSiloMeiaHora${siloId}`].data.datasets[0].data = porcentagem;
+            window[`graficoSiloMeiaHora${siloId}`].update();
         } else {
-            window[`graficoSilo${siloId}`] = new Chart(ctx, {
+            window[`graficoSiloMeiaHora${siloId}`] = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: `Porcentagem do Silo ${siloId} (Última Meia Hora)`,
-                        data: porcentagem,
+                        label: `Maior % diária dos últimos 7 dias`,
+                        data: porcentagem, 
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)', 
                         borderWidth: 1
                     }]
                 },
@@ -426,7 +424,8 @@ window.onload = function () {
                                 display: true,
                                 text: 'Porcentagem (%)'
                             },
-                            beginAtZero: true
+                            beginAtZero: true,
+                            suggestedMax: 15, 
                         }
                     }
                 }
@@ -434,6 +433,138 @@ window.onload = function () {
         }
     }
 
+    function buscarDadosSiloSemana(siloId) {
+        fetch(`/dashboard/buscarDadosSiloSemana/${siloId}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        console.log(`Dados recebidos para Silo ${siloId}: ${JSON.stringify(dados)}`);
+
+                        dados.reverse();
+
+                        plotarGraficoSemana(dados, siloId);
+                    });
+                } else {
+                    console.error(`Nenhum dado encontrado ou erro na API para Silo ${siloId}`);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico do Silo ${siloId}: ${error.message}`);
+            });
+    }
+
+    function plotarGraficoSemana(dados, siloId) {
+        const labels = dados.map(dado => dado.dataHora);
+        const porcentagem = dados.map(dado => dado.porcentagem);
+
+        const ctx = document.getElementById(`silo${siloId}_semana`).getContext('2d');
+
+        if (window[`graficoSiloSemana${siloId}`]) {
+            window[`graficoSiloSemana${siloId}`].data.labels = labels;
+            window[`graficoSiloSemana${siloId}`].data.datasets[0].data = porcentagem;
+            window[`graficoSiloSemana${siloId}`].update();
+        } else {
+            window[`graficoSiloSemana${siloId}`] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Maior % diária dos últimos 7 dias`,
+                        data: porcentagem,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: ''
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Porcentagem (%)'
+                            },
+                            beginAtZero: true,
+                            suggestedMax: 15, 
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+    function buscarDadosSiloSemestral(siloId) {
+        fetch(`/dashboard/buscarDadosSiloSemestral/${siloId}`, { cache: 'no-store' })
+        .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (dados) {
+                        console.log(`Dados recebidos para Silo ${siloId}: ${JSON.stringify(dados)}`);
+
+                        dados.reverse();
+
+                        plotarGraficoSemestral(dados, siloId);
+                    });
+                } else {
+                    console.error(`Nenhum dado encontrado ou erro na API para Silo ${siloId}`);
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados para o gráfico do Silo ${siloId}: ${error.message}`);
+            });
+    }
+
+    function plotarGraficoSemestral(dados, siloId) {
+        const labels = dados.map(dado => dado.dataHora);
+        const porcentagem = dados.map(dado => dado.porcentagem);
+
+        const ctx = document.getElementById(`silo${siloId}_semestre`).getContext('2d');
+
+        if (window[`graficoSiloSemestral${siloId}`]) {
+            window[`graficoSiloSemestral${siloId}`].data.labels = labels;
+            window[`graficoSiloSemestral${siloId}`].data.datasets[0].data = porcentagem;
+            window[`graficoSiloSemestral${siloId}`].update();
+        } else {
+            window[`graficoSiloSemestral${siloId}`] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Maior % mensal dos últimos 6 meses`,
+                        data: porcentagem,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: ''
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Porcentagem (%)'
+                            },
+                            beginAtZero: true,
+                            suggestedMax: 15, 
+                        }
+                    }
+                }
+            });
+        }
+    }
 
 
 </script>
