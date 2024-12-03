@@ -26,7 +26,7 @@ body {
 
 .menu-lateral {
     width: 30px;
-    height: 93.9vh;
+    height: 95vh;
     background-color: #2f3a4e;
     color: #ffffff;
     display: flex;
@@ -91,7 +91,7 @@ body {
 
 #visaoGeral {
     display: flex;
-    width: 1200px;
+    width: 90vw;
     height: fit-content;
     flex-direction: column;
     justify-content: center;
@@ -186,7 +186,7 @@ body {
     align-items: center;
     position: fixed;
     bottom: 20px;
-    left: 400px;
+    left: 520px;
     border-radius: 15px;
     color: white;
     width: 600px;
@@ -265,6 +265,7 @@ body {
 
 #dashboard-Silo1-ind {
     display: none;
+    height: 80vh;
 }
 
 #dashboard-Silo2-ind {
@@ -273,8 +274,8 @@ body {
 
 #visaoIndividual {
     display: none;
-    width: 1200px;
-    height: fit-content;
+    width: 90vw;
+    height: 80vh;
     flex-direction: column;
 }
 
@@ -311,9 +312,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1200px;
+    width: 90vw;
     height: 220px;
-    margin-bottom: 10px;
+    margin: 30px;
 }
 
 .mini-container {
@@ -350,13 +351,13 @@ body {
 }
 
 .grafico-longo-prazo {
-    width: 1200px;
+    width: 90vw;
     height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
-    margin-top: 20px;
+    margin-top: 60px;
     margin-bottom: 0px;
 }
 
@@ -374,8 +375,9 @@ body {
 }
 
 #grafico-hora {
-    width: 550px;
-    height: 210px;
+    margin-left: 0px;
+    width: 650px;
+    height: 280px;
 }
 
 /* Tela de configurações */
@@ -383,13 +385,13 @@ body {
 #visaoConfig {
     display: none;
     color: white;
-    width: 1200px;
+    width: 90vw;
     height: fit-content;
     flex-direction: column;
 }
 
 .inserir-usuario {
-    width: 1200px;
+    width: 90vw;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -399,7 +401,7 @@ body {
     background-color: #353a50;
     box-shadow: 0 0 5px #10224b;
     border-radius: 15px;
-    width: 1200px;
+    width: 85vw;
     height: fit-content;
     padding: 10px;
     display: flex;
@@ -444,7 +446,7 @@ body {
 
 .mostrar-usuario {
     color: #eff4ff;
-    width: 1200px;
+    width: 90vw;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -455,7 +457,7 @@ body {
     background-color: #353a50;
     box-shadow: 0 0 5px #10224b;
     border-radius: 15px;
-    width: 1180px;
+    width: 84vw;
     height: fit-content;
     padding: 20px;
     display: flex;
@@ -476,7 +478,7 @@ body {
 }
 
 .usuarios-inseridos {
-    width: 1200px;
+    width: 90vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -492,7 +494,7 @@ body {
 #validar_config {
     display: none;
     color: white;
-    width: 1200px;
+    width: 90vw;
     height: 70vh;
     flex-direction: column;
     justify-content: center;
