@@ -551,4 +551,40 @@ body {
     margin: 10px;
 }
 
-/* Gráfico de linhas geral */
+/* Div erro */
+
+
+.alerta_erro{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .card_erro {
+    display: none;
+    background-color:#2f3a4e;;
+    color: rgb(255, 255, 255);
+    width: 230px;
+    height: fit-content;
+    position: fixed;
+    border-radius: 4px;
+    border: #720101 3px solid;
+    padding: 10px;
+    margin-right: 10%;
+    align-items: center;
+    top: 120px;
+    left: 80px;
+  }
+  
+  .card_erro #mensagem_erro{
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  #divError {
+    color: #ffffff;
+    text-shadow: 3px 3px 1px rgb(255, 0, 0);
+}
+#divErrorLogin {
+    color: #ffffff;
+    text-shadow: 3px 3px 1px rgb(255, 0, 0);
+}

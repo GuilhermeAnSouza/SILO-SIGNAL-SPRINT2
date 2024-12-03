@@ -9,8 +9,8 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
-function listarUsuario(fkEmpresa) {
-    var instrucaoSql = `SELECT nome, email, telComercial FROM usuario where fk_empresa = ${fkEmpresa}`;
+function listarUsuario(idEmpresa) {
+    var instrucaoSql = `SELECT nome, email, telComercial FROM usuario where fk_empresa = ${idEmpresa}`;
     
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

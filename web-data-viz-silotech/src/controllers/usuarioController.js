@@ -58,8 +58,8 @@ function autenticar(req, res) {
 }
 
 function listarUsuario(req, res) {
-    var fkEmpresa = req.params.fkEmpresa;
-    usuarioModel.listarUsuario(fkEmpresa).then((resultado) => {
+    var idEmpresa = req.params.idEmpresa;
+    usuarioModel.listarUsuario(idEmpresa).then((resultado) => {
       res.status(200).json(resultado);
     });
 }

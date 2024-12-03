@@ -19,17 +19,7 @@ kpis_silo1(),
 kpis_silo2()">
 
     <div class="conteudo-geral">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
-            </div>
-        </div>
-        <div id="div_aguardar" class="loading-div">
-            <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
-        </div>
-
-        <div id="div_erros_login"></div>
-
+        
         <div class="container-menu">
 
             <div class="menu-lateral">
@@ -276,6 +266,16 @@ kpis_silo2()">
 
             </div>
 
+            <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+            </div>
+            <div id="div_aguardar" class="loading-div">
+                <!-- <img src="./assets/circle-loading.gif" id="loading-gif" /> -->
+            </div>
+    
+            <div id="div_erros_login"></div>    
 
         </div>
 
@@ -283,7 +283,7 @@ kpis_silo2()">
 </body>
 
 </html>
-<script src="./js/sessao.js"></script>
+<script src="../js/sessao.js"></script>
 <script>
 
     listaEmpresasCadastradas = [];
@@ -354,7 +354,7 @@ kpis_silo2()">
     }
 
     function listarUsuario() {
-        var idEmpresa = sessionStorage.FK_EMPRESA;
+        var idEmpresa = sessionStorage.ID_EMPRESA;
 
         fetch(`/usuarios/listarUsuario/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
