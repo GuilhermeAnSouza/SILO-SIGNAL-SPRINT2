@@ -557,9 +557,9 @@ body {
 .alerta_erro{
     display: flex;
     justify-content: flex-end;
-  }
+}
   
-  .card_erro {
+.card_erro {
     display: none;
     background-color:#2f3a4e;;
     color: rgb(255, 255, 255);
@@ -573,18 +573,62 @@ body {
     align-items: center;
     top: 120px;
     left: 80px;
-  }
+}
   
-  .card_erro #mensagem_erro{
+.card_erro #mensagem_erro{
     font-weight: 500;
     font-size: 20px;
-  }
+}
 
-  #divError {
+#divError {
     color: #ffffff;
     text-shadow: 3px 3px 1px rgb(255, 0, 0);
 }
+
 #divErrorLogin {
     color: #ffffff;
     text-shadow: 3px 3px 1px rgb(255, 0, 0);
+}
+
+/* ALERTAS */
+
+.alerta_erro {
+    color: #ccdcff;
+    display: flex;
+}
+
+.alerta_erro p {
+    font-size: 16px;
+}
+
+.container_alerta_amarelo {
+    display: flex;
+    background-color:#ffee00;
+    color: rgb(0, 0, 0);
+    width: 230px;
+    height: fit-content;
+    position: fixed;
+    border-radius: 10px;
+    border: #720101 3px solid;
+    padding: 10px;
+    margin-right: 10%;
+    align-items: center;
+    bottom: 80px;
+    left: 100px;
+}
+
+.container_alerta_vermelho {
+    display: flex;
+    background-color:#e00000;
+    color: rgb(249, 239, 239);
+    width: 230px;
+    height: fit-content;
+    position: fixed;
+    border-radius: 10px;
+    border: #720101 3px solid;
+    padding: 10px;
+    margin-right: 10%;
+    align-items: center;
+    bottom: 80px;
+    left: 80px;
 }
