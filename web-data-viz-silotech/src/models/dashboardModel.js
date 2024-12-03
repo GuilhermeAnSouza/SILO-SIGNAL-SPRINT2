@@ -2,12 +2,11 @@ var database = require("../database/config");
 
 function buscarMedidas6horas(siloId) {
   var instrucaoSql = `
-    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') AS dataHora, 
+    SELECT DATE_FORMAT(dataHora, '%m-%d %H:00:00') AS dataHora, 
     MAX(porcentagemDetec) AS porcentagem
     FROM sensor WHERE fk_silo = ${siloId}
     AND dataHora >= DATE_ADD(NOW(), INTERVAL -6 HOUR) 
-    GROUP BY DATE_FORMAT(dataHora, '%Y-%m-%d %H:00:00') 
-    ORDER BY dataHora DESC;
+    GROUP BY DATE_FORMAT(dataHora, '%m-%d %H:00:00');
   `;
 
   console.log(`Exececutando SQL: `, instrucaoSql);
@@ -20,7 +19,7 @@ function buscarMedidas6horas(siloId) {
 
 function buscarMedidasMeiaHora(siloId) {
   var instrucaoSql = `
-    SELECT DATE_FORMAT(dataHora, '%Y-%m-%d às %H:%i') AS dataHora,
+    SELECT DATE_FORMAT(dataHora, '%m-%d às %H:%i') AS dataHora,
     sensor.porcentagemDetec AS porcentagem
     FROM silo JOIN sensor 
     ON sensor.fk_silo = silo.idSilo
