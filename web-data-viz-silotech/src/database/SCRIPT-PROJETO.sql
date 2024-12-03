@@ -13,7 +13,7 @@ CREATE TABLE empresa (
 );
 
 insert into empresa (razaoSocial, cnpj, telEmp, emailEmp) values
-('Sojas 1000 grau', '12345678914527', '11236589741', 'soja1000grau@gmail.com'),
+('SPTECH', '12345678914527', '11236589741', 'SPTECH@gmail.com'),
 ('Silo Tech', '98765434578961', '11980775433', 'silo@tech.com');
 
 select * from empresa;
@@ -31,7 +31,7 @@ create table usuario (
 );
 
 insert into usuario (nome, telComercial, email, senha) values
-('Joaozinho', '11948791977', 'joao@hotmail.com', 'Marcelo@2010'),
+('João', '11948791977', 'joao@hotmail.com', 'Joao@2020'),
 ('Guilherme', '11948794499', 'guilherme@hotmail.com', 'Gui@2020'),
 ('João Roberto', '11987659998', 'joao@silotech.com', 'joao@2024'),
 ('Marcelo Henrique', '11909871234', 'marcelo@silotech.com', 'marcelo@2024'),
@@ -82,64 +82,34 @@ SELECT sensor.porcentagemDetec FROM silo JOIN sensor ON fk_silo = idSilo where f
 select * from sensor;
 
 create table tecnico (
-idTecnico int primary key auto_increment,
-nome varchar(45),
-telefone char(11),
-email varchar(45)
+    idTecnico int primary key auto_increment,
+    nome varchar(45),
+    telefone char(11),
+    email varchar(45)
 );
 
 create table manutencao (
-idManutencao int,
-fkTecnico int,
-fkSensor int,
-	foreign key (fkTecnico) references Tecnico(idTecnico),
-    foreign key (fkSensor) references Sensor(idsensor),
-dtManutencao date,
-descricao varchar(100),
-primary key (idManutencao, fkTecnico, fkSensor)
+    idManutencao int,
+    fkTecnico int,
+    fkSensor int,
+        foreign key (fkTecnico) references Tecnico(idTecnico),
+        foreign key (fkSensor) references Sensor(idsensor),
+    dtManutencao date,
+    descricao varchar(100),
+    primary key (idManutencao, fkTecnico, fkSensor)
 );
 
 
-INSERT INTO sensor (idSensor, porcentagemDetec, dataHora, fk_silo) VALUES 
-(DEFAULT, 3.25, '2024-11-01 10:15:00', 2),
-(DEFAULT, 4.50, '2024-11-02 08:30:00', 2),
-(DEFAULT, 8.75, '2024-11-05 14:45:00', 2),
-(DEFAULT, 10.50, '2024-11-06 16:20:00', 2),
-(DEFAULT, 2.85, '2024-11-07 09:10:00', 2),
-(DEFAULT, 9.15, '2024-11-08 17:25:00', 2),
-(DEFAULT, 12.45, '2024-11-09 18:00:00', 2),
-(DEFAULT, 1.25, '2024-11-10 11:30:00', 2),
-(DEFAULT, 6.80, '2024-11-12 13:45:00', 2),
-(DEFAULT, 3.95, '2024-11-13 07:20:00', 2),
-(DEFAULT, 11.65, '2024-11-14 15:30:00', 2),
-(DEFAULT, 5.25, '2024-10-10 08:45:00', 2),
-(DEFAULT, 4.95, '2024-10-15 11:50:00', 2),
-(DEFAULT, 13.80, '2024-10-20 16:10:00', 2),
-(DEFAULT, 7.50, '2024-10-22 09:25:00', 2),
-(DEFAULT, 2.45, '2024-10-25 14:55:00', 2),
-(DEFAULT, 10.00, '2024-10-26 18:15:00', 2),
-(DEFAULT, 6.75, '2024-10-28 12:35:00', 2),
-(DEFAULT, 0.95, '2024-10-30 07:45:00', 2),
-(DEFAULT, 3.75, '2024-09-05 10:00:00', 2),
-(DEFAULT, 14.15, '2024-09-07 15:10:00', 2),
-(DEFAULT, 8.55, '2024-09-10 08:20:00', 2),
-(DEFAULT, 5.05, '2024-09-12 14:30:00', 2),
-(DEFAULT, 4.25, '2024-09-15 16:45:00', 2),
-(DEFAULT, 9.85, '2024-09-18 12:50:00', 2),
-(DEFAULT, 2.35, '2024-09-20 07:35:00', 2),
-(DEFAULT, 11.20, '2024-08-01 09:10:00', 2),
-(DEFAULT, 8.10, '2024-08-05 13:25:00', 2),
-(DEFAULT, 3.40, '2024-08-07 11:45:00', 2),
-(DEFAULT, 5.95, '2024-08-12 16:30:00', 2),
-(DEFAULT, 12.00, '2024-08-15 18:10:00', 2),
-(DEFAULT, 7.25, '2024-08-18 14:20:00', 2),
-(DEFAULT, 2.80, '2024-08-22 07:50:00', 2),
-(DEFAULT, 0.50, '2024-08-25 10:35:00', 2),
-(DEFAULT, 6.55, '2024-08-28 13:40:00', 2),
-(DEFAULT, 13.45, '2024-08-30 16:50:00', 2),
-(DEFAULT, 9.05, '2024-07-05 08:55:00', 2),
-(DEFAULT, 3.15, '2024-07-10 12:00:00', 2),
-(DEFAULT, 10.85, '2024-07-15 14:15:00', 2);
+INSERT INTO sensor (porcentagemDetec, dataHora, fk_silo) VALUES
+(10.25, '2024-11-26 11:30:00', 1),
+(9.75, '2024-11-19 11:30:00', 1),
+(9.25, '2024-11-12 11:30:00', 1),
+(8.95, '2024-11-05 11:30:00', 1),
+(8.25, '2024-10-10 08:45:00', 1),
+(6.55, '2024-09-10 08:20:00', 1),
+(5.20, '2024-08-10 09:10:00', 1),
+(3.15, '2024-07-10 12:00:00', 1),
+(2.80, '2024-06-10 10:00:00', 1);
 
 select * from sensor;
 
