@@ -614,9 +614,9 @@ alerta_silo2()">
         buscarDadosSiloSemana(siloId);
         buscarDadosSiloSemestral(siloId);
 
-        setTimeout(() => {
+        setInterval(() => {
             buscarDadosSilo1MeiaHora(siloId);
-        }, 30 * 60 * 1000); // 30 minutos em milissegundos
+        }, 25000); // 30 minutos em milissegundos
 
         setTimeout(() => {
             buscarDadosSilo6horas(siloId);
