@@ -16,7 +16,8 @@
 listar(),
 listarUsuario(),
 kpis_silo1(),
-kpis_silo2()">
+kpis_silo2()
+alerta_silo1()">
 
     <div class="conteudo-geral">
         
@@ -276,6 +277,10 @@ kpis_silo2()">
             </div>
     
             <div id="div_erros_login"></div>    
+
+            <div id="div_alerta" class="div_alerta">
+
+            </div>
 
         </div>
 
@@ -737,6 +742,59 @@ kpis_silo2()">
             }
         });
     }
+
+// ALERTA QUANDO MAIOR QUE 10% FEITO POR MIM GUILHERME TONINHO
+
+    function alerta_silo1() {
+        var idEmpresa = sessionStorage.ID_EMPRESA
+        var idSilo = 1
+        fetch(`/dashboard/kpis_silo1/${idEmpresa}/${idSilo}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var conteudo = document.getElementById("porcentagem_silo1_ind");
+                    var mensagem = document.createElement("span");
+                    console.log('Conteúdo')
+                    throw "Nenhum resultado encontrado.";
+                }
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+                    var conteudo = document.getElementById("porcentagem_silo1_ind");
+                    conteudo.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var lista = resposta[i];
+                        // Alerta amarelo
+                        if (lista.porcentagemDetec >= 5 && lista.porcentagemDetec < 10) {
+                            div_alerta.innerHTML = `
+                <div id="container_alerta" class="container_alerta_amarelo">
+                    <div id="mensagem_alerta" class="mensagem_alerta_amarelo">
+
+                        Cuidado se pa pode aumentar 
+
+                    </div>
+                </div>`
+
+                        }else if (lista.porcentagemDetec >= 10){ //Alerta Vermelho
+                            
+                            div_alerta.innerHTML = `
+                <div id="container_alerta" class="container_alerta_vermelho">
+                    <div id="mensagem_alerta" class="mensagem_alerta_vermelho">
+
+                        SILO 1 ESTÁ EM PERIGO!!! CUIDADO PESSOAS VÃO MORRER
+                        VOCÊ QUER QUE MORTES ESTEJAM NAS SUAS COSTAS? POR DESRESPEITO A SEGURANÇA DOS SEUS TRABALHADORES?
+                        VOCÊ É UM MONSTRO!!!
+
+                    </div>
+                </div>`
+
+                        }
+                    }
+                })
+            }
+        });
+    }
+
+// ^^ ALERTA QUANDO MAIOR QUE 10% FEITO POR MIM GUILHERME TONINHO
+
 
     function plotarGrafico6horas(dados, siloId) {
         const labels = dados.map(dado => dado.dataHora);
