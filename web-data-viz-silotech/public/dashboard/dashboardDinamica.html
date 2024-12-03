@@ -618,15 +618,15 @@ alerta_silo2()">
             buscarDadosSilo1MeiaHora(siloId);
         }, 25000); // 30 minutos em milissegundos
 
-        setTimeout(() => {
+        setInterval(() => {
             buscarDadosSilo6horas(siloId);
         }, 21600000); // 30 minutos em milissegundos
 
-        setTimeout(() => {
+        setInterval(() => {
             buscarDadosSiloSemana(siloId);
         }, 1.000 * 120 * 24 * 7); // 604.800.000 milhoes milissegundos - 7 dias
 
-        setTimeout(() => {
+        setInterval(() => {
             buscarDadosSiloSemestral(siloId);
         }, 15780096 * 1000); // 6 meses em milissegundos
     }
