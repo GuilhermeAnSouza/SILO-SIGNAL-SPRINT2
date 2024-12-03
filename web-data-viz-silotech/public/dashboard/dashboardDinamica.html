@@ -680,8 +680,8 @@ alerta_silo2()">
                         } else if (lista.porcentagemDetec > 15) {
                             porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
                         }
-                        // silo 2 individual
                         porcentagem_silo1_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+                        // silo 1 geral
                         if (lista.porcentagemDetec < 4) {
                             porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
                         } else if (lista.porcentagemDetec < 9) {
@@ -716,7 +716,7 @@ alerta_silo2()">
                     conteudo.innerHTML = "";
                     for (let i = 0; i < resposta.length; i++) {
                         var lista = resposta[i];
-                        // silo 1 individual
+                        // silo 2 individual
                         if (lista.porcentagemDetec < 4) {
                             porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
                         } else if (lista.porcentagemDetec < 9) {
@@ -726,7 +726,7 @@ alerta_silo2()">
                         } else if (lista.porcentagemDetec > 15) {
                             porcentagem_silo2_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
                         }
-                        // silo 2 individual
+                        // silo 2 geral
                         porcentagem_silo2_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
                         if (lista.porcentagemDetec < 4) {
                             porcentagem_silo2_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
