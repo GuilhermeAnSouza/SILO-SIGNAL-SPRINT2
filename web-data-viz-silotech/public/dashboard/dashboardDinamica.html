@@ -15,8 +15,7 @@
 <body onload="
 listar(),
 listarUsuario(),
-kpis_silo1(),
-kpis_silo2()
+kpis_silo2(),
 alerta_silo1(),
 alerta_silo2()">
 
@@ -64,9 +63,7 @@ alerta_silo2()">
                         <p>STATUS ATUAL</p>
                         <p class="nome-silo">SILO 2</p>
                         <div id="porcentagem_silo2_geral" class="porcentagem-silo">
-                            <!-- <div id="statusSilo2"></div>
-                            <span id="silo2_porcentagem">2.89%</span> -->
-                            <!-- esse dado precisa ser dinamico -->
+                            <span id="silo2_porcentagem">INATIVO</span>
                         </div>
                     </div>
 
@@ -94,10 +91,16 @@ alerta_silo2()">
 
                 <div class="input_select_silo">
                     <select id="select_silo" onclick="selecionarSilo()">
+                        <option value="#">ESCOLHA SEU SILO</option>
                         <option value="1">SILO 1</option>
                         <option value="2">SILO 2</option>
                     </select>
                     <div id="divMensagem"></div>
+                </div>
+
+                <!-- ESCOLHA SILO -->
+                <div id="escolha_silo">
+                    <p>Escolha um silo para continuar.</p>
                 </div>
 
                 <!-- Dash Silo1 -->
@@ -110,8 +113,8 @@ alerta_silo2()">
                                 <p>STATUS ATUAL</p>
                                 <p class="nome-silo">SILO 1</p>
                                 <div id="porcentagem_silo1_ind" class="porcentagem-silo">
-                                    <!-- <div id="statusSilo1"></div> -->
-                                    <!-- <span id="silo1_porcentagem">2.89%</span> esse dado precisa ser dinamico -->
+                                    <!-- <div id="statusSilo1"></div>
+                                    <span id="silo1_porcentagem">2.89%</span> esse dado precisa ser dinamico -->
                                 </div>
                             </div>
 
@@ -140,40 +143,7 @@ alerta_silo2()">
 
                 <!-- Dash Silo 2 -->
                 <div id="dashboard-Silo2-ind">
-
-                    <div id="container-kpi-ind">
-                        <div class="mini-container">
-
-                            <div class="kpi2">
-                                <p>STATUS ATUAL</p>
-                                <p class="nome-silo">SILO 2</p>
-                                <div id="porcentagem_silo2_ind" class="porcentagem-silo">
-                                    <!-- <div id="statusSilo2"></div>
-                                    <span id="silo2_porcentagem">2.89%</span> esse dado precisa ser dinamico -->
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="grafico-geral" id="grafico-hora">
-                            <canvas id="silo2_meiaHora"></canvas>
-                        </div>
-
-                    </div>
-
-                    <div class="grafico-longo-prazo">
-                        <div class="grafico-geral">
-                            <canvas id="silo2_dia"></canvas>
-                        </div>
-                        <div class="grafico-geral">
-                            <canvas id="silo2_semana"></canvas>
-                        </div>
-                        <div class="grafico-geral">
-                            <canvas id="silo2_semestre"></canvas>
-                        </div>
-                    </div>
-
-
+                    <p>Silo INATIVO</p>
                 </div>
 
                 <div class="kpi-bandeira-ind">
@@ -292,10 +262,12 @@ alerta_silo2()">
 <script src="../js/sessao.js"></script>
 <script>
 
+    kpis_silo1_geral()
+    
     listaEmpresasCadastradas = [];
-
+    
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-
+    
     document.getElementById('visaoGeral').style.display = 'flex';
     //funcoes para aparecer e desaparecer cada div
     function mostrarGeral() {
@@ -305,13 +277,12 @@ alerta_silo2()">
         document.getElementById('visaoConfig').style.display = 'none';
         subTitulo.innerHTML = `Visão Geral`;
     }
-
+    
     function mostrarIndividual() {
         document.getElementById('visaoGeral').style.display = 'none'
         document.getElementById('visaoIndividual').style.display = 'flex'
         document.getElementById('validar_config').style.display = 'none'
         document.getElementById('visaoConfig').style.display = 'none'
-        document.getElementById('dashboard-Silo1-ind').style.display = 'block'
         subTitulo.innerHTML = `DashBoard Individual`;
     }
 
@@ -597,12 +568,21 @@ alerta_silo2()">
         const siloId = seletor.value;
         atualizarPeriodicamente(siloId);
 
-        if (siloId == '1') {
+        kpis_silo1_ind()
+
+        if (siloId == "#") {
+            divMensagem.innerHTML = 'Escolha seu Silo'
+            document.getElementById('escolha_silo').style.display = 'block'
+            document.getElementById('dashboard-Silo1-ind').style.display = 'none'
+            document.getElementById('dashboard-Silo2-ind').style.display = 'none'
+        } else if (siloId == '1') {
             divMensagem.innerHTML = 'Silo 1 selecionado com sucesso!'
+            document.getElementById('escolha_silo').style.display = 'none'
             document.getElementById('dashboard-Silo1-ind').style.display = 'block'
             document.getElementById('dashboard-Silo2-ind').style.display = 'none'
         } else if (siloId == '2') {
             divMensagem.innerHTML = 'Silo 2 selecionado com sucesso!'
+            document.getElementById('escolha_silo').style.display = 'none'
             document.getElementById('dashboard-Silo1-ind').style.display = 'none'
             document.getElementById('dashboard-Silo2-ind').style.display = 'block'
         }
@@ -652,7 +632,7 @@ alerta_silo2()">
             });
     }
 
-    function kpis_silo1() {
+    function kpis_silo1_ind() {
         var idEmpresa = sessionStorage.ID_EMPRESA
         var idSilo = 1
         fetch(`/dashboard/kpis_silo1/${idEmpresa}/${idSilo}`).then(function (resposta) {
@@ -670,7 +650,7 @@ alerta_silo2()">
                     conteudo.innerHTML = "";
                     for (let i = 0; i < resposta.length; i++) {
                         var lista = resposta[i];
-                        // silo 1 individual
+                        // // silo 1 individual
                         if (lista.porcentagemDetec < 4) {
                             porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
                         } else if (lista.porcentagemDetec < 9) {
@@ -681,7 +661,30 @@ alerta_silo2()">
                             porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
                         }
                         porcentagem_silo1_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
-                        // silo 1 geral
+                    }
+                })
+            }
+        });
+    }
+
+    function kpis_silo1_geral() {
+        var idEmpresa = sessionStorage.ID_EMPRESA
+        var idSilo = 1
+        fetch(`/dashboard/kpis_silo1/${idEmpresa}/${idSilo}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var conteudo = document.getElementById("porcentagem_silo1_geral");
+                    var mensagem = document.createElement("span");
+                    mensagem.innerHTML = "Nenhum resultado encontrado."
+                    conteudo.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado.";
+                }
+                resposta.json().then(function (resposta) {
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+                    var conteudo = document.getElementById("porcentagem_silo1_geral");
+                    conteudo.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var lista = resposta[i];
                         if (lista.porcentagemDetec < 4) {
                             porcentagem_silo1_geral.innerHTML += `<div id="statusSilo1_ok"></div>`
                         } else if (lista.porcentagemDetec < 9) {

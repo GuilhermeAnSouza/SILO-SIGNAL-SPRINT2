@@ -40,8 +40,10 @@ insert into usuario (nome, telComercial, email, senha) values
 ('Linya Mendonça', '11999098878', 'linya@silotech.com', 'linya@2024'),
 ('Guilherme Antônio', '11956564747', 'guilherme@silotech.com', 'guilherme@2024');
 
-update empresa set fk_responsavel = 1 where idEmpresa = 1;
+select * from usuario;
 
+update empresa set fk_responsavel = 1 where idEmpresa = 1;
+update usuario set fk_empresa = 1 where idUsuario = 1;
 update usuario set fk_empresa = 1 where idUsuario = 2;
 update usuario set fk_empresa = 2 where idUsuario = 3;
 update usuario set fk_empresa = 2 where idUsuario = 4;

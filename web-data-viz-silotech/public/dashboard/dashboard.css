@@ -277,6 +277,7 @@ body {
     width: 90vw;
     height: 80vh;
     flex-direction: column;
+    color: white;
 }
 
 .input_select_silo {
@@ -615,7 +616,7 @@ body {
     padding: 10px;
     margin-right: 10%;
     align-items: center;
-    bottom: 80px;
+    bottom: 10px;
     left: 100px;
 }
 
@@ -631,6 +632,6 @@ body {
     padding: 10px;
     margin-right: 10%;
     align-items: center;
-    bottom: 80px;
+    bottom: 10px;
     left: 80px;
 }
