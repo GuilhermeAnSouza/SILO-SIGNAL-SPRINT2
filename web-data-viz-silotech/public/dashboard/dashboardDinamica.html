@@ -654,15 +654,15 @@ alerta_silo2()">
                         var lista = resposta[i];
                         // // silo 1 individual
                         if (lista.porcentagemDetec < 4) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_ok"></div>`
+                            porcentagem_silo1_ind.innerHTML = `<div id="statusSilo1_ok"></div>`
                         } else if (lista.porcentagemDetec < 9) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_atencao"></div>`
+                            porcentagem_silo1_ind.innerHTML = `<div id="statusSilo1_atencao"></div>`
                         } else if (lista.porcentagemDetec < 15) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                            porcentagem_silo1_ind.innerHTML = `<div id="statusSilo1_alerta"></div>`
                         } else if (lista.porcentagemDetec > 15) {
-                            porcentagem_silo1_ind.innerHTML += `<div id="statusSilo1_alerta"></div>`
+                            porcentagem_silo1_ind.innerHTML = `<div id="statusSilo1_alerta"></div>`
                         }
-                        porcentagem_silo1_ind.innerHTML += `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
+                        porcentagem_silo1_ind.innerHTML = `<span id="silo1_porcentagem">${lista.porcentagemDetec}%</span>`
                     }
                 })
             }
