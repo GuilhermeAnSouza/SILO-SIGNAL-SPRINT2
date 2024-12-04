@@ -296,9 +296,11 @@ alerta_silo2()">
     }
 
     function validar_codigo() {
+
+        var idEmpresa = sessionStorage.ID_EMPRESA;
         var codigoVar = codigoValidarConfig_input.value;
 
-        var codigo_validacao = 123
+        var codigo_validacao = 1234567
 
         if (codigoVar == codigo_validacao) {
             document.getElementById('visaoGeral').style.display = 'none'

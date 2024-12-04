@@ -6,6 +6,12 @@ function buscarPorId(id) {
   return database.executar(instrucaoSql);
 }
 
+function buscarPorIdEmpresa(idEmpresa) {
+  var instrucaoSql = `SELECT codigoAtivacao FROM empresa WHERE idEmpresa = '${idEmpresa}'`;
+
+  return database.executar(instrucaoSql);
+}
+
 function listar() {
   var instrucaoSql = `SELECT idEmpresa, razaoSocial, cnpj, codigoAtivacao FROM empresa`;
 
@@ -30,4 +36,4 @@ function buscarPorCodigoAtivacao(codigoAtivacao){
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, buscarPorCodigoAtivacao };
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, buscarPorCodigoAtivacao, buscarPorIdEmpresa };

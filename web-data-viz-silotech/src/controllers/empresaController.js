@@ -22,6 +22,14 @@ function buscarPorId(req, res) {
   });
 }
 
+function buscarPorIdEmpresa(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  empresaModel.buscarPorIdEmpresa(idEmpresa).then((resultado) => {
+    res.status(200).json(resultado);
+  });
+}
+
 // function buscarPorCodigoAtivacao(req, res) {
 //   empresaModel.buscarPorCodigoAtivacao(codigoAtivacao).then((resultado) => {
 //     res.status(200).json(resultado);
@@ -62,4 +70,5 @@ module.exports = {
   buscarPorId,
   cadastrar,
   listar,
+  buscarPorIdEmpresa,
 };
